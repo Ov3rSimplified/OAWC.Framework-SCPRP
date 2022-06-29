@@ -64,6 +64,8 @@ function OAWC.Initialize:LoadFramework()
     OAWC.Initialize:LoadDir("oawc/core/initial")
     OAWC.Initialize:LoadDir("oawc/core/sql")
     OAWC.Initialize:LoadDir("oawc/library")
+    OAWC.Initialize:LoadDir("oawc/core/ui/escapemenu")
+    OAWC.Initialize:LoadDir("oawc/core/ui")
 end
 
 
