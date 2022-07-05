@@ -32,7 +32,61 @@ local function openESC()
         surface.DrawTexturedRect(w * .06, h * 0 + 50, 200,200)
     end
 
-    
+    local ppbg = vgui.Create("DPanel", escPNL)
+    ppbg:SetSize(500, 300)
+    ppbg:SetPos(escPNL:GetWide() - 600, escPNL:GetTall() * 0.5 - 150)
+    ppbg.Paint = function(s, w, h)
+        surface.SetDrawColor(0, 0, 0, 200)
+        surface.DrawOutlinedRect(0, 0, w, h)
+        surface.SetDrawColor(0, 0, 0, 100)
+        surface.DrawRect(0, 0, w, h)
+    end 
+
+    local scroll = vgui.Create("DScrollPanel", ppbg)
+    scroll:SetPos(0, ppbg:GetTall() * 0.03)
+    scroll:SetSize(ppbg:GetWide(), ppbg:GetTall() * 0.9)
+    function scroll:Paint(w, h) end
+    local vbar = scroll:GetVBar()
+
+	function vbar:Paint(w, h)
+		
+	end
+	
+	function vbar.btnUp:Paint(w, h)
+		draw.RoundedBox(2, w / 2 - 1, 0, 2, h - 2, Color(0, 0, 0, 150))
+	end
+	
+	function vbar.btnDown:Paint(w, h)
+		draw.RoundedBox(2, w / 2 - 1, 2, 2, h, Color(0, 0, 0, 150))
+	end
+	
+	function vbar.btnGrip:Paint(w, h)
+		draw.RoundedBox(2, w / 2 - 1, 0, 2, h, Color(0, 0, 0, 220))
+	end
+
+    for k, v in pairs(player.GetAll()) do
+        local pp = vgui.Create("DButton", scroll)
+        pp:SetSize(0, 30)
+        pp:Dock(TOP)
+        pp:DockMargin(25, 5, 5, 5)
+        pp:SetText("")
+        pp.Paint = function(s, w, h)
+            surface.SetDrawColor(70, 70, 70, 50)
+            surface.DrawRect(0, 0, w, h)
+            surface.SetDrawColor(0, 0, 0, 150)
+            surface.DrawOutlinedRect(0, 0, w, h)
+            draw.SimpleText(v:Nick(), "oawc.escT.25", w / 2, h / 2, Color(200, 200, 200, 200), 1, 1)
+        end 
+        pp.DoClick = function()
+            if (v:IsBot() or !IsValid(v)) then chat.AddText(Color(116,0,0),"[OAWC - ERROR] ",Color(255,255,255),"Profil konnte nicht Geöffnet werden") return end
+            v:ShowProfile()
+        end
+        pp.DoRightClick = function()
+            if (v:IsBot() ) then chat.AddText(Color(116,0,0),"[OAWC - ERROR] ",Color(255,255,255),"SteamID konnte nicht Kopiert werden") return end
+            chat.AddText(Color(25,155,5),"[OAWC] ",Color(255,255,255),"SteamID erfolgreich Kopiert!")
+            SetClipboardText(v:SteamID())
+        end
+    end
 
     local discord = vgui.Create("DButton", escPNL)
     discord:SetSize(ScrW() * .15, 75)
@@ -139,7 +193,7 @@ local function openESC()
 
         end 
 
-        timer.Simple(1, function()
+        timer.Simple(1.5, function()
             LocalPlayer():ConCommand("disconnect")
         end)
     end 
