@@ -1,0 +1,26 @@
+TEAM_SPECTATOR = DarkRP.createJob("Spectator", {
+    color = Color(20, 150, 20, 255),
+    model = { "models/player/skeleton.mdl" },
+    description = [[]],
+    weapons = {},
+    command = "spectator",
+    max = 0,
+    salary = 0,
+    admin = 0,
+    vote = false,
+    hasLicense = false, 
+    candemote = false,
+  })
+TEAM_SCPSELECT = DarkRP.createJob("SCP Selection", {
+  color = Color(20, 150, 20, 255),
+  model = { "models/player/skeleton.mdl" },
+  description = [[]],
+  weapons = {},
+  command = "scpselection",
+  max = 0,
+  salary = 0,
+  admin = 0,
+  vote = false,
+  hasLicense = false,
+  candemote = false,
+})

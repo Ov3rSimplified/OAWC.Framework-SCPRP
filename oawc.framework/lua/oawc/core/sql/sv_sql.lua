@@ -22,7 +22,7 @@ local SQL = {}
 
 
 concommand.Add("SQL.DeleteTable", function(ply,_,args)
-	SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
+	OAWC.SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
 end)
 --[[---------------------------------------------------------
 	Name: Setup
