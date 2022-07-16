@@ -35,6 +35,7 @@ OAWC.Config.RegisteredJobs = {
     ["FDP"] = {
         [TEAM_Jane] = true,
         [RDSRP_21stSOM] = true,
+        [TEAM_Dosi] = true,
     },
     ["DCP"] = {
         [RDSRP_21stSOM] = true,

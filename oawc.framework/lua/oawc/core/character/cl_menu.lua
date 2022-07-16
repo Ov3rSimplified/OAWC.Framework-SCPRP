@@ -169,7 +169,11 @@ function OAWC.Charactersystem.UI:OpenBeforeMenu()
     local Color = Color 
 
 	if LocalPlayer().CharacterID == nil or LocalPlayer().CharacterID == 0 then
-		OAWC.Charactersystem.UI:MainMenu()
+		if IsValid(OAWC.Charactersystem.UI.Menu) then 
+			return
+		else
+			OAWC.Charactersystem.UI:MainMenu()
+		end
 	end	
 end
 

@@ -23,18 +23,24 @@ util.AddNetworkString("OAWC.Config.Sync");
 local function Set(len,ply)
     local read = net.ReadCompressedTable();
     if istable(read) then 
-        --if ply:HasPermission("OAWC_Config") then 
-            table.Merge(OAWC.CoreConfig,read);
+        if ply:HasPermission("OAWC_Config") then 
+            OAWC.CoreConfig = read;
             if file.IsDir("OAWC/Config", "DATA") then
                 file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig));
+                net.Start("OAWC.Config.Sync");
+                net.WriteCompressedTable(read);
+                net.Broadcast();
             else
                 file.CreateDir("OAWC/Config");
                 file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig));
+                net.Start("OAWC.Config.Sync");
+                net.WriteCompressedTable(read);
+                net.Broadcast();
             end;
-       -- else
-          --  return;
-        --    ply:Kick("You are not allowed to change the config!");
-       -- end;
+        else
+            ply:Kick("You are not allowed to change the config!")
+            return
+        end;
     end;
 end; net.Receive("OAWC.Config.Set", Set);
 
@@ -53,7 +59,6 @@ local function Get(len,ply)
                 end;
             end;
             table.Merge(read,ct);  // Merge the configs together.
-            --PrintTable(read);
             net.Start("OAWC.Config.Sync");
             net.WriteCompressedTable(read);
             net.Send(ply);

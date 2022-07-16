@@ -23,7 +23,8 @@ util.AddNetworkString("OAWC.CharSys.UpdateNumberInformation")
 util.AddNetworkString("OAWC.CharSys.SelectCharacter")
 util.AddNetworkString("OAWC.CharSys.DeleteCharacter")
 util.AddNetworkString("OAWC.CharSys.SelectSCP")
- 
+util.AddNetworkString("OAWC.CharSys.UpdateName")
+
 local function CreateCharacter(len,ply)
     local read = net.ReadCompressedTable()
     local tos = tostring
@@ -56,6 +57,7 @@ local function SelectCharacter(len,ply)
     ply.CharacterKind = str
 
     ply:SetSpectatorMode(false)
+    ply:Respawn()
     ply:changeTeam(tonumber(OAWC.Charactersystem.Source.Characters[ply:SteamID()][str].lastjobinnum), true, true)
     ply:setDarkRPVar("rpname", tostring(OAWC.Charactersystem.Source.Characters[ply:SteamID()][str].name))
 
@@ -64,8 +66,9 @@ local function SelectCharacter(len,ply)
     net.WriteString(str) 
     net.Send(ply)
     hook.Run("OAWC.CharSys.SelectCharacter", ply, read, str)
-end net.Receive("OAWC.CharSys.SelectCharacter", SelectCharacter)
 
+    OAWC:Notify("info", ply, "Viel Erfolg!", "Viel Spaß und Erfolg wünschen wir dir beim Spielen <3", 1)
+end net.Receive("OAWC.CharSys.SelectCharacter", SelectCharacter)
 
 local function SelectSCP(len,ply)    
     ply.CharacterID = -1
@@ -95,10 +98,10 @@ local function RequestCompressedData(len,ply)
                         sid = v.sid,
                         name = v.name,
                         lastjob = RPExtraTeams[tonumber(v.lastjob)].command,
-                        lastjobinnum = tonumber(v.lastjob),
+                        lastjobinnum = tonumber(v.lastjob), 
                         jobkind = v.jobkind,
                         inventory = v.inventory,
-                        other = v.other,
+                        other = util.JSONToTable(v.other),
                     }
                 } 
             } 
@@ -134,6 +137,13 @@ local function DeleteCharacter(len,ply)
     hook.Run("OAWC.CharSys.DeleteCharacter", ply, int)
     OAWC.SQL:Query("DELETE FROM `OAWC_Character` WHERE ID = '" .. int .. "'", nil, OAWC.SQL.Error)
 end net.Receive("OAWC.CharSys.DeleteCharacter", DeleteCharacter)
+
+local function UpdateName(len,ply)
+    local int = net.ReadInt(32);
+    local str = net.ReadString();
+    OAWC.SQL:Query("UPDATE `OAWC_Character` SET name = '" .. str .. "' WHERE ID = '" .. int .. "'", nil,  OAWC.SQL.Error);
+end; net.Receive("OAWC.CharSys.UpdateName", UpdateName)
+
 
 --[[
     METAFUNCTIONS

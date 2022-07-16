@@ -19,16 +19,5 @@
     Thats the BaseConfig of the INGAMECONFIG etc
 ]]
 
-
-OAWC.CoreConfig.Binds = {
-    
-    {
-        Name = "test",
-        Key = KEY_T,
-        Executekind = "Function",
-        Execute = [[
-            print("test")
-        ]]
-    }
-    
-}
+ 
+OAWC.CoreConfig.Binds = {}  
