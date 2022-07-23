@@ -15,34 +15,5 @@
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
-local PLAYER = FindMetaTable("Player")
 
  
-function PLAYER:SetDoNothing(bool)
-    net.Start("OAWC.SetDoNothing")
-    net.WriteBool(bool)
-    net.Send(self)
-    if bool then 
-        for k, v in pairs(self:GetWeapons()) do
-            self:StripWeapon(v:GetClass())
-        end
-        self:GodEnable()
-        self:SetMoveType(MOVETYPE_NOCLIP)
-        self:SetCollisionGroup(COLLISION_GROUP_WORLD)
-        self:SetNoTarget(true)
-        self:SetNotSolid(true) 
-        self:SetNoDraw(true)
-        self:SetNoCollideWithTeammates(true)
-        self:SetCustomCollisionCheck(true)
-    else
-        self.DoNothing = false
-        self:GodDisable()
-        self:SetMoveType(MOVETYPE_WALK)
-        self:SetCollisionGroup(COLLISION_GROUP_PLAYER)
-        self:SetNoTarget(false)
-        self:SetNotSolid(false)
-        self:SetNoDraw(false)
-        self:SetNoCollideWithTeammates(false)
-        self:SetCustomCollisionCheck(false)
-    end
-end

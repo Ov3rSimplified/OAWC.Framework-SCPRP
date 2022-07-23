@@ -9,17 +9,44 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations! 
+// Informations!
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
-]]  
-OAWC.Config.SQL = {
-    UseMySQL = true, 
-    HostIP = "45.81.232.16",
-    Username = "test123_D",
-    Password = "test123_D!",
-    Databasename = "test123",
-    Port = 3306
+]]
+OAWC.Config = {}
+OAWC.Config.Humans = {}
+
+OAWC.Config.Humans.MinCreateWeight = 45
+OAWC.Config.Humans.MaxCreateWeight = 200
+
+OAWC.Config.Humans.MaxCreateAge = 40
+OAWC.Config.Humans.MinCreateAge = 18
+OAWC.Config.Humans.MinNameLength = 3
+OAWC.Config.Humans.MaxNameLength = 20
+
+OAWC.Config.Humans.GenderModels = {
+    ["MALE"] = {},
+    ["FEMALE"] = {}
 }
+
+OAWC.Config.RegisteredJobs = {
+    ["FDP"] = {
+        [TEAM_CITIZEN] = true,
+    },
+    ["DCP"] = {
+        [TEAM_CITIZEN] = true,
+    },
+    ["SCP"] = {
+        [TEAM_CITIZEN] = true,
+    } 
+}
+
+OAWC.Config.StarterJobs =  {
+    FDP = TEAM_CITIZEN,
+    DCP = TEAM_CITIZEN,
+    SCP = TEAM_SCPSELECT,
+}
+
+

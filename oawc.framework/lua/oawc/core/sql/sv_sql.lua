@@ -22,7 +22,7 @@ local SQL = {}
 
 
 concommand.Add("SQL.DeleteTable", function(ply,_,args)
-	SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
+	OAWC.SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
 end)
 --[[---------------------------------------------------------
 	Name: Setup
@@ -145,13 +145,13 @@ function SQL:Connect()
 		self.db = mysqloo.connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
 
 		self.db.onConnectionFailed = function(_, msg)
-				timer.Simple(5, function()
-					if not self then return end
+			timer.Simple(5, function()
+				if not self then return end
 
-					self:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
-				end)
+				self:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
+			end)
 
-				error("Connection failed! " .. tostring(msg) ..	"\nTrying again in 5 seconds.")
+			error("Connection failed! " .. tostring(msg) ..	"\nTrying again in 5 seconds.")
 		end
 
 		mysqloo.onConnected = function()
@@ -165,11 +165,9 @@ function SQL:Connect()
 		end
 
 		self.db:connect()
-	else
-		--mysqloo.onConnected()
 	end
 end
-
+ 
 function SQL:Disconnect()
 	if IsValid(self.db) then
 		self.db:disconnect()
@@ -184,7 +182,8 @@ end
 
 
 function SQL:UsingMySQL()
-	return self.config.mysql
+	print(OAWC.Config.SQL.UseMySQL)
+	--return OAWC.Config.SQL.UseMySQL
 end
 
 function SQL:Escape(str)
@@ -216,7 +215,6 @@ SQL:Connect()
 
 
 OAWC.SQL = SQL
-
 
 
 

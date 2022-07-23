@@ -27,6 +27,17 @@ MsgC(Color(38,255,0),[[\______/     /__/     \__\        \__/  \__/         \___
 OAWC = OAWC or {}
 OAWC.Initialize = {}
 OAWC.SQL = OAWC.SQL or {}
+OAWC.Charactersystem = OAWC.Charactersystem or {}
+OAWC.Charactersystem.UI = {}
+OAWC.Charactersystem.Source = {}
+OAWC.Charactersystem.Source.Synchronisationdata = {}
+OAWC.Charactersystem.Source.Characters = {}
+OAWC.L = OAWC.L or {}
+OAWC.UI = {} 
+OAWC.CoreConfig = {}  // Stands for the Configtable for the Core
+OAWC.IConfig = {} // Stands for IngameConfig UI, Funtion etc
+
+
 if SERVER then
     OAWC.SQL.MySQL = OAWC.SQL.MySQL or {}
 end
@@ -64,8 +75,11 @@ function OAWC.Initialize:LoadFramework()
     OAWC.Initialize:LoadDir("oawc/core/initial")
     OAWC.Initialize:LoadDir("oawc/core/sql")
     OAWC.Initialize:LoadDir("oawc/library")
-    OAWC.Initialize:LoadDir("oawc/core/ui/escapemenu")
+    OAWC.Initialize:LoadDir("oawc/core/character")
+    OAWC.Initialize:LoadDir("oawc/core/inventory")
     OAWC.Initialize:LoadDir("oawc/core/ui")
+    OAWC.Initialize:LoadDir("oawc/core/ui/hud")
+    OAWC.Initialize:LoadDir("oawc/core/ui/playerbinds")
 end
 
 
@@ -80,7 +94,7 @@ end)
 
 
 
-
+ 
 
 
 
