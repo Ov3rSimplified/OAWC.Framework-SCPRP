@@ -15,9 +15,3 @@
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
-OAWC.Config = {}
-
-
-
-OAWC.Config_ui_discord = "https://discord.gg/gBP2jKRkcT"
-OAWC.Config_ui_kollektion = "https://pornhub.com"
