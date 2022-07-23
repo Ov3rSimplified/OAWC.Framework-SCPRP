@@ -143,13 +143,13 @@ local function DeleteCharacter(len,ply)
         net.Send(ply)
     end
     hook.Run("OAWC.CharSys.DeleteCharacter", ply, int)
-    OAWC.SQL:Query("DELETE FROM `OAWC_Character` WHERE ID = '" .. int .. "'", nil, OAWC.SQL.Error)
+    OAWC.SQL:Query("DELETE FROM OAWC_Character WHERE ID = " .. int .. "'", nil, OAWC.SQL.Error)
 end net.Receive("OAWC.CharSys.DeleteCharacter", DeleteCharacter)
 
 local function UpdateName(len,ply)
     local int = net.ReadInt(32);
     local str = net.ReadString();
-    OAWC.SQL:Query("UPDATE `OAWC_Character` SET name = '" .. str .. "' WHERE ID = '" .. int .. "'", nil,  OAWC.SQL.Error);
+    OAWC.SQL:Query("UPDATE OAWC_Character SET name = " .. SQLStr(str) .. " WHERE ID = " .. int, nil,  OAWC.SQL.Error);
 end; net.Receive("OAWC.CharSys.UpdateName", UpdateName)
 
 

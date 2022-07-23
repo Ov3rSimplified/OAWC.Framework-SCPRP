@@ -21,14 +21,12 @@ end)
 hook.Add("OnPlayerChangedTeam", "OAWC.UdateTeamHook", function(ply,b,a)
    if ply.CharacterKind == "FDP" then 
       if OAWC.Config.RegisteredJobs["FDP"][a] then
-         OAWC.SQL:Query("UPDATE `OAWC_Character` SET lastjob = '" .. a .. "' WHERE ID = '" .. ply.CharacterID .. "'", nil,  OAWC.SQL.Error)
+         OAWC.SQL:Query("UPDATE `OAWC_Character` SET lastjob = " .. SQLStr(a) .. " WHERE ID = " .. ply.CharacterID, nil,  OAWC.SQL.Error)
       end
    end 
 end)
 
 hook.Add("playerCanChangeTeam", "OAWC.PlayerCanChangeTeamHook", function(ply, job_index, force)
-  -- print("INDEX: ".. job_index)
-  -- print("FORCE: ".. tostring(force))
    if ply.CharacterKind == "FDP" then 
       if not OAWC.Config.RegisteredJobs["FDP"][job_index] then
          OAWC:Notify("error", ply, "Fehler!", "Du kannst diesen Job nicht als 'FDP' auswählen", 1.4)
