@@ -16,11 +16,11 @@
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
 
-local function RequestCompressedData()
-    local read = net.ReadCompressedTable()
-    OAWC.Charactersystem.Source.Characters = read
-    PrintTable(read)
-end net.Receive("OAWC.CharSys.RequestCompressedData", RequestCompressedData)
+local function RequestPlayerCharacter()
+    local read = net.ReadCompressedTable();
+    LocalPlayer().Characters = read;
+    PrintTable(LocalPlayer().Characters); 
+end;net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter)
 
 local function SelectCharacter()
     local read = net.ReadInt(32)
@@ -32,3 +32,9 @@ local function UpdateNumberInformation()
     LocalPlayer().CharacterID = net.ReadInt(32)
     LocalPlayer().CharacterKind = net.ReadString() or ""
 end net.Receive("OAWC.CharSys.UpdateNumberInformation", UpdateNumberInformation)
+
+
+concommand.Add("df", function() 
+    net.Start("OAWC.CharSys.RequestPlayerCharacter")
+    net.SendToServer()
+end)

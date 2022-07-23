@@ -15,7 +15,7 @@
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
---[[
+--[[ 
 
     sql connection: ID, sid, name, lastjob
 
@@ -26,12 +26,12 @@
 if SERVER then 
 
     local query 
-    if OAWC.SQL:UsingMySQL() then 
+    if OAWC.Config.SQL.UseMySQL then 
         query = [[
             CREATE TABLE IF NOT EXISTS `OAWC_Character` (
                 `ID` INT NOT NULL AUTO_INCREMENT,
                 `sid`TEXT NOT NULL,
-                `name` TEXT NOT NULL,
+                `name` TEXT NOT NULL, 
                 `lastjob` TEXT NOT NULL,
                 `jobkind` TEXT NOT NULL,
                 `inventory`TEXT NOT NULL,
@@ -42,15 +42,18 @@ if SERVER then
     else
         query = [[ 
             CREATE TABLE IF NOT EXISTS `OAWC_Character` (
-                `ID` INT NOT NULL AUTO_INCREMENT,
+                `ID` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                 `sid`TEXT NOT NULL,
                 `name` TEXT NOT NULL,
                 `lastjob` TEXT NOT NULL,
                 `jobkind` TEXT NOT NULL,
-                PRIMARY KEY (`id`)
+                `inventory` TEXT NOT NULL,
+                `other` TEXT NOT NULL
                 );
             ]]
     end 
-    
+     
     OAWC.SQL:Query(query, nil, OAWC.SQL.Error)
+    print(sql.LastError())
 end
+ 

@@ -212,13 +212,11 @@ function OAWC.Charactersystem.UI:MainMenu()
 		function sbar.btnDown:Paint(w, h) return end
 
 	local function task()
-		net.Start("OAWC.CharSys.RequestCompressedData")
-		net.SendToServer() 
-	
+
+		net.Start("OAWC.CharSys.RequestPlayerCharacter")
+		net.SendToServer()
+
 		timer.Simple(0.9, function()
-
-
-
 			--[[
 				FDP - C/S Char
 			]]
@@ -269,17 +267,11 @@ function OAWC.Charactersystem.UI:MainMenu()
 				p.Top:SetText("")
 				local txt1 = v.title
 				p.Top.Paint = function(self,w,h)
-					if not table.IsEmpty(OAWC.Charactersystem.Source.Characters) then
-						if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
-							txt1 = v.title
-						else
-							if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()][v.kind] then
-								txt1 = v.title
-							else
-								txt1 = OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()][v.kind].name
-							end
-						end
-					end
+					if LocalPlayer().Characters[v.kind] then 
+						txt1 = LocalPlayer().Characters[v.kind].name;
+					else
+						txt1 = v.title;
+					end;
 
 					if (!self.scrollid or self.scrollid > 0) then
 						self.scrollid = OAWC.L:SimpleScrollingText(self.scrollid, txt1, "OAWC.CHS.CreateTop", w/2, h/2, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )
@@ -287,8 +279,6 @@ function OAWC.Charactersystem.UI:MainMenu()
 						draw.SimpleText(txt1, "OAWC.CHS.CreateTop", w/2, h/2, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 					end
 				end
-
-
 
 				p.MP = vgui.Create("DPanel",p.Panel)
 				p.MP:Dock(FILL)
@@ -302,16 +292,16 @@ function OAWC.Charactersystem.UI:MainMenu()
 				p.Logo:DockMargin(20,scrh*0.02,20,scrh*0.02)
 				p.Logo:SetMaterial(v.img)
 
-				if not table.IsEmpty(OAWC.Charactersystem.Source.Characters) then 
-					if OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
-						if v.kind == "FDP" and OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["FDP"] or v.kind == "DCP" and OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["DCP"] then 
+				if not table.IsEmpty(LocalPlayer().Characters) then 
+					if LocalPlayer().Characters then 
+						if v.kind == "FDP" and LocalPlayer().Characters["FDP"] or v.kind == "DCP" and LocalPlayer().Characters["DCP"] then 
 							p.Delete = vgui.Create("DButton",p.Panel)
 							p.Delete:SetSize(scrw*0.015, scrh*0.020)
 							p.Delete:SetPos(scrw*0.159,scrh*0.012)
 							p.Delete:SetText("X")
 							p.Delete.DoClick = function()
 								net.Start("OAWC.CharSys.DeleteCharacter")
-								net.WriteInt(OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()][v.kind].ID,32)
+								net.WriteInt(LocalPlayer().Characters[v.kind].id,32)
 								net.SendToServer()
 
 								self.TaskMenu:Clear()
@@ -339,14 +329,15 @@ function OAWC.Charactersystem.UI:MainMenu()
 					local btnc = Color(50,205,65)
 
 					if items["SCP"] and v.kind == "SCP" then
-						if table.IsEmpty(OAWC.Charactersystem.Source.Characters) then 	
+						if table.IsEmpty(LocalPlayer().Characters) then 	
 							self:SetText("GESPERRT")
 							btnc = Color(255,0,0)
 						else
-							if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
+							if not LocalPlayer().Characters["FDP"] or LocalPlayer().Characters["DCP"] then 
 								self:SetText("GESPERRT")
 								btnc = Color(255,0,0)
 							end
+							btnc = Color(50,205,65)
 							self:SetText("SPIELEN")
 						end
 					end
@@ -354,17 +345,17 @@ function OAWC.Charactersystem.UI:MainMenu()
 					draw.RoundedBox(15,0,0,w,h,btnc)
 
 					if self:IsHovered() then  
-						p.Panel.Color = Color(238,143,10)
+						p.Panel.Color = Color(238,143,10) 
 					else
 						p.Panel.Color = Color(53,53,53,255)
 					end
-					if table.IsEmpty(OAWC.Charactersystem.Source.Characters) then 	
+					if table.IsEmpty(LocalPlayer().Characters) then 	
 						self:SetText("ERSTELLEN")
 					else
-						if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
+						if not LocalPlayer().Characters then 
 							self:SetText("ERSTELLEN")
 						else
-							if OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()][v.kind] then
+							if LocalPlayer().Characters[v.kind] then
 								self:SetText("SPIELEN")
 							else
 								self:SetText("ERSTELLEN")
@@ -373,10 +364,10 @@ function OAWC.Charactersystem.UI:MainMenu()
 					end
 
 					if items["SCP"] and v.kind == "SCP" then
-						if table.IsEmpty(OAWC.Charactersystem.Source.Characters) then 	
+						if table.IsEmpty(LocalPlayer().Characters) then 	
 							self:SetText("GESPERRT")
 						else
-							if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
+							if not LocalPlayer().Characters then 
 								self:SetText("GESPERRT")
 							end
 							self:SetText("SPIELEN")
@@ -938,49 +929,50 @@ function OAWC.Charactersystem.UI:MainMenu()
 					end
 					-- [[ IF ]]
 
-					if table.IsEmpty(OAWC.Charactersystem.Source.Characters) then 	
+					if table.IsEmpty(LocalPlayer().Characters) then 	
 						if v.kind == "FDP" then 
 							CreateCharacter("FDP")
 						elseif v.kind == "DCP" then
 							CreateCharacter("DCP")
 						end
 					else
-						if not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()] then 
+						if not LocalPlayer().Characters then 
 							if v.kind == "FDP" then 
 								CreateCharacter("FDP")
 							elseif v.kind == "DCP" then
 								CreateCharacter("DCP")
 							end
 						else
-							if OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["SCP"] then 
-							elseif not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["SCP"] and v.kind == "SCP" then
+							if LocalPlayer().Characters["SCP"] then 
+							elseif not LocalPlayer().Characters["SCP"] and v.kind == "SCP" then
 								net.Start("OAWC.CharSys.SelectSCP")
 								net.SendToServer()
 								OAWC.Charactersystem.UI.Menu:Remove()
 							end 
 
-							if OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["DCP"] and v.kind == "DCP" then
+							if LocalPlayer().Characters["DCP"] and v.kind == "DCP" then
 								net.Start("OAWC.CharSys.SelectCharacter")
-								net.WriteInt(OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["DCP"].ID, 32)
+								net.WriteInt(LocalPlayer().Characters["DCP"].id, 32)
 								net.WriteString("DCP") 
 								net.SendToServer()
 								OAWC.Charactersystem.UI.Menu:Remove()
-							elseif not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["DCP"] and v.kind == "DCP" then 
+							elseif not LocalPlayer().Characters["DCP"] and v.kind == "DCP" then 
 								CreateCharacter("DCP")
 							end 
 
-							if OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["FDP"] and v.kind == "FDP" then
+							if LocalPlayer().Characters["FDP"] and v.kind == "FDP" then
 								net.Start("OAWC.CharSys.SelectCharacter")
-								net.WriteInt(OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["FDP"].ID, 32)
+								net.WriteInt(LocalPlayer().Characters["FDP"].id, 32)
 								net.WriteString("FDP")
 								net.SendToServer()
 								OAWC.Charactersystem.UI.Menu:Remove()
-							elseif not OAWC.Charactersystem.Source.Characters[LocalPlayer():SteamID()]["FDP"] and v.kind == "FDP" then 
+							elseif not LocalPlayer().Characters["FDP"] and v.kind == "FDP" then 
 								CreateCharacter("FDP")
 							end
 						end
 					end
 				end
+				
 			end
 		end)
 	end
@@ -991,4 +983,3 @@ end
 concommand.Add("oawc_charactersystem_mainmenu", function()
     OAWC.Charactersystem.UI:MainMenu()
 end)  
-

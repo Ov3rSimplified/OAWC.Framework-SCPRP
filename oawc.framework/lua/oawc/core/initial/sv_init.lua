@@ -65,3 +65,4 @@ hook.Add("PlayerSpawn", "CheckInitplayer", function(ply)
   end
   --print(ply.CharacterID)
 end) 
+

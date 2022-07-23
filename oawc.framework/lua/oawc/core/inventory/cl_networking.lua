@@ -1,7 +1,7 @@
 --
 hook.Add("HUDShouldDraw", "StarWarsHUD.HideWeaponSelector", function(name)
     if name == "CHudWeaponSelection" then
-        return false
+        return true 
     end
 end) 
 print("StarWarsHUD: Weapon Selector Hidden")
@@ -17,6 +17,7 @@ local tl = {
 local current = 1
 
 hook.Add("PlayerBindPress", "StarWarsHUD.WeaponSelector", function(ply, bind, pressed)
+    /*
     ply = LocalPlayer();
     local wp = ply:GetWeapons();
 
@@ -170,6 +171,7 @@ OAWC:RegisterFont("OAWC.WPS.FontBig", {
 local speed = 0.2
 local barStatus = 0  
 hook.Add("HUDPaint", "StarWarsHUD.WeaponSelector", function()
+    /*
     local ply = LocalPlayer();
     if ply:HasWeapon(tl[current]) then
         local s = ply:GetWeapon(tl[current]):GetClass();
@@ -221,7 +223,6 @@ hook.Add("HUDPaint", "StarWarsHUD.WeaponSelector", function()
     
 
 
-/*
     draw.SimpleText( tl[1], "DermaLarge", ScrW() * 0.075, ScrH() * 0.79, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.RoundedBox(0, ScrW() * 0.0, ScrH() * 0.75, ScrW() * 0.004, ScrH() * 0.07, Color(255, 255, 255, 100))
     draw.SimpleText( tl[2], "DermaLarge", ScrW() * 0.075, ScrH() * 0.84, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)

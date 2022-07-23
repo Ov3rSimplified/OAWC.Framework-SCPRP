@@ -76,12 +76,10 @@ function OAWC.Initialize:LoadFramework()
     OAWC.Initialize:LoadDir("oawc/core/sql")
     OAWC.Initialize:LoadDir("oawc/library")
     OAWC.Initialize:LoadDir("oawc/core/character")
-    OAWC.Initialize:LoadDir("oawc/core/integratedmodules")
-    OAWC.Initialize:LoadDir("oawc/core/integratedmodules/playerbinds")
-    OAWC.Initialize:LoadDir("oawc/core/inventorysys")
-    OAWC.Initialize:LoadDir("oawc/core/ui/escapemenu")
+    OAWC.Initialize:LoadDir("oawc/core/inventory")
     OAWC.Initialize:LoadDir("oawc/core/ui")
-    OAWC.Initialize:LoadDir("oawc/core/hud")
+    OAWC.Initialize:LoadDir("oawc/core/ui/hud")
+    OAWC.Initialize:LoadDir("oawc/core/ui/playerbinds")
 end
 
 

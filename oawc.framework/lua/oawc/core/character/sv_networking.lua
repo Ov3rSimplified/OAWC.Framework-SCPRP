@@ -17,13 +17,13 @@
 ]]
 --[[ NETMESSAGES ]]
 
-util.AddNetworkString("OAWC.CharSys.RequestCompressedData")
-util.AddNetworkString("OAWC.CharSys.CreateCharacter")
-util.AddNetworkString("OAWC.CharSys.UpdateNumberInformation")
-util.AddNetworkString("OAWC.CharSys.SelectCharacter")
-util.AddNetworkString("OAWC.CharSys.DeleteCharacter")
-util.AddNetworkString("OAWC.CharSys.SelectSCP")
-util.AddNetworkString("OAWC.CharSys.UpdateName")
+util.AddNetworkString("OAWC.CharSys.CreateCharacter");
+util.AddNetworkString("OAWC.CharSys.UpdateNumberInformation");
+util.AddNetworkString("OAWC.CharSys.SelectCharacter");
+util.AddNetworkString("OAWC.CharSys.DeleteCharacter");
+util.AddNetworkString("OAWC.CharSys.SelectSCP");
+util.AddNetworkString("OAWC.CharSys.UpdateName");
+util.AddNetworkString("OAWC.CharSys.RequestPlayerCharacter");
 
 local function CreateCharacter(len,ply)
     local read = net.ReadCompressedTable()
@@ -45,9 +45,10 @@ local function CreateCharacter(len,ply)
         lastjob = OAWC.Config.StarterJobs.DCP
     end
 
-    OAWC.SQL:Query("INSERT INTO `OAWC_Character` (sid, name, lastjob, jobkind, inventory, other) VALUES('" .. ply:SteamID() .. "', '" .. tostring(read.name) .. "', '" .. tostring(lastjob) .. "', '" .. tostring(read.kind) .. "', '".. util.TableToJSON({}) .. "', '" .. util.TableToJSON(chari) .. "')", nil, OAWC.SQL.Error)
+    OAWC.SQL:Query("INSERT INTO `OAWC_Character` (sid, name, lastjob, jobkind, inventory, other) VALUES('" .. ply:SteamID() .. "', " .. SQLStr(read.name) .. ", " .. SQLStr(lastjob) .. ", " .. SQLStr(read.kind) .. ", ".. SQLStr(util.TableToJSON({})) .. ", " .. SQLStr(util.TableToJSON(chari)) .. ")", nil, OAWC.SQL.Error)
     hook.Run("OAWC.CharSys.CreateCharacter", ply, read.name, read.kind)
 end net.Receive("OAWC.CharSys.CreateCharacter", CreateCharacter)
+
 
 local function SelectCharacter(len,ply)
     local read = net.ReadInt(32)
@@ -57,9 +58,10 @@ local function SelectCharacter(len,ply)
     ply.CharacterKind = str
 
     ply:SetSpectatorMode(false)
-    ply:Respawn()
-    ply:changeTeam(tonumber(OAWC.Charactersystem.Source.Characters[ply:SteamID()][str].lastjobinnum), true, true)
-    ply:setDarkRPVar("rpname", tostring(OAWC.Charactersystem.Source.Characters[ply:SteamID()][str].name))
+    ply:changeTeam(tonumber(ply.Characters[str].lastjobinnum), true, true)
+    ply:setDarkRPVar("rpname", tostring(ply.Characters[str].name))
+
+    ply:Spawn()
 
     net.Start("OAWC.CharSys.SelectCharacter")
     net.WriteInt(read, 32)
@@ -77,7 +79,7 @@ local function SelectSCP(len,ply)
     ply:SetSpectatorMode(false)
     ply:changeTeam(tonumber(OAWC.Config.StarterJobs.SCP), true, true)
     ply:setDarkRPVar("rpname", "SCP")
-
+    ply:Spawn()
 
     net.Start("OAWC.CharSys.SelectCharacter")
     net.WriteInt(-1, 32)
@@ -86,37 +88,43 @@ local function SelectSCP(len,ply)
     hook.Run("OAWC.CharSys.SelectCharacter", ply, -1, "sCP")
 end net.Receive("OAWC.CharSys.SelectSCP", SelectSCP)
 
-local function RequestCompressedData(len,ply)
 
-    OAWC.SQL:Query([[SELECT * FROM `OAWC_Character`]], function(data)
-        local synctable = {} 
-        for k,v in pairs(data) do  
-            local mT = {
-                [v.sid] = { 
-                    [v.jobkind] = {
-                        ID = v.ID,
-                        sid = v.sid,
-                        name = v.name,
-                        lastjob = RPExtraTeams[tonumber(v.lastjob)].command,
-                        lastjobinnum = tonumber(v.lastjob), 
-                        jobkind = v.jobkind,
-                        inventory = v.inventory,
-                        other = util.JSONToTable(v.other),
-                    }
-                } 
-            } 
-            table.Merge(synctable,mT)
-        end
-        OAWC.Charactersystem.Source.Characters = synctable
-        net.Start("OAWC.CharSys.RequestCompressedData")
-        net.WriteCompressedTable(synctable)
-        net.Broadcast()
+local function RequestPlayerCharacter(len,ply)
+    OAWC.SQL:Query("SELECT * FROM OAWC_Character WHERE sid = " .. SQLStr(ply:SteamID()), function(data)
+        local r = {};
+        if data == nil then
+            r = {};
+            ply.Characters = r;
+            net.Start("OAWC.CharSys.RequestPlayerCharacter");
+            net.WriteCompressedTable(r);
+            net.Broadcast();
+            return; 
+        end;
+            for k,v in pairs(data) do
+                r[v.jobkind] = {
+                    id = v.ID,
+                    sid = v.sid,
+                    name = v.name,
+                    lastjob = RPExtraTeams[tonumber(v.lastjob)].command,
+                    lastjobinnum = tonumber(v.lastjob), 
+                    jobkind = v.jobkind,
+                    inventory = util.JSONToTable(v.inventory),
+                    other = util.JSONToTable(v.other)
+                };
+            end;
+        ply.Characters = r;
+
+        net.Start("OAWC.CharSys.RequestPlayerCharacter");
+        net.WriteCompressedTable(r);
+        net.Broadcast();
+
     end, OAWC.SQL.Error)
-end net.Receive("OAWC.CharSys.RequestCompressedData", RequestCompressedData)
+end; net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter);
 
+ 
 local function DeleteCharacter(len,ply)
     local int = net.ReadInt(32)
-    if not OAWC.Charactersystem.Source.Characters[ply:SteamID()]["DCP"] or not OAWC.Charactersystem.Source.Characters[ply:SteamID()]["FDP"] and ply.CharacterID == -1 then 
+    if not ply.Characters["DCP"] or not ply.Characters["FDP"] and ply.CharacterID == -1 then 
         ply:SetSpectatorMode(true)
         ply:setDarkRPVar("rpname",  "Spectator")
         ply.CharacterID = 0

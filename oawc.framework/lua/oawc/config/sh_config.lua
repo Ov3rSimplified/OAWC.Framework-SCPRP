@@ -33,21 +33,19 @@ OAWC.Config.Humans.GenderModels = {
 
 OAWC.Config.RegisteredJobs = {
     ["FDP"] = {
-        [TEAM_Jane] = true,
-        [RDSRP_21stSOM] = true,
-        [TEAM_Dosi] = true,
+        [TEAM_CITIZEN] = true,
     },
     ["DCP"] = {
-        [RDSRP_21stSOM] = true,
+        [TEAM_CITIZEN] = true,
     },
     ["SCP"] = {
-        [TEAM_SCPSELECT] = true,
+        [TEAM_CITIZEN] = true,
     } 
 }
 
 OAWC.Config.StarterJobs =  {
-    FDP = TEAM_Jane,
-    DCP = TEAM_Jane,
+    FDP = TEAM_CITIZEN,
+    DCP = TEAM_CITIZEN,
     SCP = TEAM_SCPSELECT,
 }
 

@@ -14,9 +14,9 @@
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
-]] 
+]]  
 OAWC.Config.SQL = {
-    UseMySQL = true,
+    UseMySQL = true, 
     HostIP = "45.81.232.16",
     Username = "test123_D",
     Password = "test123_D!",
