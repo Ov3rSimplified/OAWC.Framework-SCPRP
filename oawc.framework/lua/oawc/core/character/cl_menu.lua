@@ -160,10 +160,10 @@ local logos = {
 	scp = Material("materials/oawc/logos/oawc_scplogo.png"),
 }
 
-timer.Simple(0, function()
+timer.Simple(1, function()
 	OAWC.Charactersystem.UI:OpenBeforeMenu()
 end)
-
+ 
 function OAWC.Charactersystem.UI:OpenBeforeMenu()
 	local scrw, scrh = ScrW(), ScrH()  
     local Color = Color 
@@ -954,6 +954,7 @@ function OAWC.Charactersystem.UI:MainMenu()
 								net.Start("OAWC.CharSys.SelectCharacter")
 								net.WriteInt(LocalPlayer().Characters["DCP"].id, 32)
 								net.WriteString("DCP") 
+								net.WriteString(LocalPlayer().Characters["DCP"].sid)
 								net.SendToServer()
 								OAWC.Charactersystem.UI.Menu:Remove()
 							elseif not LocalPlayer().Characters["DCP"] and v.kind == "DCP" then 
@@ -963,7 +964,8 @@ function OAWC.Charactersystem.UI:MainMenu()
 							if LocalPlayer().Characters["FDP"] and v.kind == "FDP" then
 								net.Start("OAWC.CharSys.SelectCharacter")
 								net.WriteInt(LocalPlayer().Characters["FDP"].id, 32)
-								net.WriteString("FDP")
+								net.WriteString("FDP") 
+								net.WriteString(LocalPlayer().Characters["FDP"].sid)
 								net.SendToServer()
 								OAWC.Charactersystem.UI.Menu:Remove()
 							elseif not LocalPlayer().Characters["FDP"] and v.kind == "FDP" then 

@@ -11,10 +11,10 @@
 
 // Informations!
 // Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
+// Startday: 27.06.2022 / 14:23 
 // FRAMEWORK FOR THE OAWC SCPRP !!
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
 
 
-LocalPlayer().Characters = {}
+LocalPlayer().Characters = LocalPlayer().Characters or {}

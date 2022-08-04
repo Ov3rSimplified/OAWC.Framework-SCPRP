@@ -37,7 +37,7 @@ function OAWC.GetConfig()
     net.Start("OAWC.Config.Get");
     net.SendToServer();
 end;  
-OAWC.GetConfig() 
+OAWC.GetConfig()  
 
 
 // ** MENU

@@ -49,3 +49,7 @@ hook.Add("HUDPaint", "DoNothingHud", function()
         draw.RoundedBox()
     end*/
 end)
+
+
+local function OAWCAddLoad()
+end; hook.Add("OAWCAddLoad", "OAWCAddLoad", OAWCAddLoad );

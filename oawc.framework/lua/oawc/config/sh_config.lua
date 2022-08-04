@@ -16,6 +16,10 @@
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]
 OAWC.Config = {}
+OAWC.Config.DragBlackList = {
+    ["swine_stuka"] = true,
+} 
+
 OAWC.Config.Humans = {}
 
 OAWC.Config.Humans.MinCreateWeight = 45

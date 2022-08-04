@@ -21,3 +21,5 @@
 
  
 OAWC.CoreConfig.Binds = {}  
+
+OAWC.CoreConfig.HandSwep = "weapon_ohands"

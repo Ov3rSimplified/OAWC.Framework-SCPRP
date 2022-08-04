@@ -16,7 +16,7 @@
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
 ]]  
 OAWC.Config.SQL = {
-    UseMySQL = true, 
+    UseMySQL = true,  
     HostIP = "45.81.232.16",
     Username = "test123_D",
     Password = "test123_D!",

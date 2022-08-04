@@ -27,7 +27,7 @@ util.AddNetworkString("OAWC.CharSys.RequestPlayerCharacter");
 
 local function CreateCharacter(len,ply)
     local read = net.ReadCompressedTable()
-    local tos = tostring
+    local ss = SQLStr
     local chari = {
         Age = read.age,
         Weight = read.weight,
@@ -45,32 +45,60 @@ local function CreateCharacter(len,ply)
         lastjob = OAWC.Config.StarterJobs.DCP
     end
 
-    OAWC.SQL:Query("INSERT INTO `OAWC_Character` (sid, name, lastjob, jobkind, inventory, other) VALUES('" .. ply:SteamID() .. "', " .. SQLStr(read.name) .. ", " .. SQLStr(lastjob) .. ", " .. SQLStr(read.kind) .. ", ".. SQLStr(util.TableToJSON({})) .. ", " .. SQLStr(util.TableToJSON(chari)) .. ")", nil, OAWC.SQL.Error)
+    OAWC.SQL:Query("INSERT INTO `OAWC_Character` (sid, name, age, gender, weight, wallet, sap, rep, spp, stp, lastjob, jobkind, inventory, model, level, playerdetails) VALUES('" .. ply:SteamID() .. "', " .. ss(read.name) .. ", " .. ss(read.age) .. ", " .. ss(read.gender) .. ", " .. ss(read.weight) .. ", " .. ss(1) .. ", " .. ss(read.SAP) .. ", " .. ss(read.REP) .. ", " .. ss(read.SPP) .. ",  " .. ss(read.STP) .. ", " .. ss(lastjob) .. ", " .. ss(read.kind) .. ", " .. ss(util.TableToJSON({Slot = {[1] = "NULL", [2] = "NULL", [3] = "NULL"}, Items = {}})) .. ",  " .. ss("SOON") ..",  " .. ss(0) .. ", " .. ss(util.TableToJSON({})) .. ")", nil, OAWC.SQL.Error)
     hook.Run("OAWC.CharSys.CreateCharacter", ply, read.name, read.kind)
 end net.Receive("OAWC.CharSys.CreateCharacter", CreateCharacter)
-
 
 local function SelectCharacter(len,ply)
     local read = net.ReadInt(32)
     local str = net.ReadString()
-    
-    ply.CharacterID = read
-    ply.CharacterKind = str
+    local sid = net.ReadString()
 
-    ply:SetSpectatorMode(false)
-    ply:changeTeam(tonumber(ply.Characters[str].lastjobinnum), true, true)
-    ply:setDarkRPVar("rpname", tostring(ply.Characters[str].name))
+    if ply:SteamID() == sid then 
+        if ply.CharacterID == read then return end;
+        if not isnumber(read) then return end;
+        if not isstring(str) then return end;
+        if not str == "FDP" and not str == "DCP" then return end;
+        
+        ply.CharacterID = read;
+        ply.CharacterKind = str;
 
-    ply:Spawn()
+        ply:SetSpectatorMode(false);
+        ply:setDarkRPVar("money", tonumber(ply.Characters[str].wallet));
+        print(ply.Characters[str].wallet)
+        ply:changeTeam(tonumber(ply.Characters[str].lastjobinnum), true, true);
+        ply:setDarkRPVar("rpname", tostring(ply.Characters[str].name));
+        ply:Spawn();
 
-    net.Start("OAWC.CharSys.SelectCharacter")
-    net.WriteInt(read, 32)
-    net.WriteString(str) 
-    net.Send(ply)
-    hook.Run("OAWC.CharSys.SelectCharacter", ply, read, str)
 
-    OAWC:Notify("info", ply, "Viel Erfolg!", "Viel Spaß und Erfolg wünschen wir dir beim Spielen <3", 1)
+        net.Start("OAWC.CharSys.SelectCharacter");
+        net.WriteInt(read, 32);
+        net.WriteString(str);
+        net.Send(ply);
+        hook.Run("OAWC.CharSys.SelectCharacter", ply, read, str);
+
+        OAWC:Notify("info", ply, "Viel Erfolg!", "Viel Spaß und Erfolg wünschen wir dir beim Spielen <3", 1);
+    else
+        --ply:Kick("You've been kicked for try to cheat! #ErrorCode 12")
+        print("[OAWC] " .. ply:Nick() .. " tried to cheat!")
+        return;
+    end;
 end net.Receive("OAWC.CharSys.SelectCharacter", SelectCharacter)
+
+
+local function DarkRPValueChanged(ply, varname, oldValue, newValue)
+    if ply.Characters == nil or table.IsEmpty(ply.Characters) then return end
+    if ply.CharacterID == 0 or ply.CharacterKind == nil then return end
+    if varname == "money" then 
+        OAWC.SQL:Query("UPDATE `OAWC_Character` SET `wallet` = " .. newValue .. " WHERE `ID` = " .. SQLStr(ply.Characters[ply.CharacterKind].id) .. "", nil, OAWC.SQL.Error)
+        print(ply.Characters[ply.CharacterKind].wallet)
+    end;
+
+end; hook.Add("DarkRPVarChanged", "OAWC.SnychDRPV", DarkRPValueChanged)
+
+concommand.Add("AD" , function(ply, cmd, args)
+    ply:addMoney(tonumber(args[1]))
+end)
 
 local function SelectSCP(len,ply)    
     ply.CharacterID = -1
@@ -79,6 +107,7 @@ local function SelectSCP(len,ply)
     ply:SetSpectatorMode(false)
     ply:changeTeam(tonumber(OAWC.Config.StarterJobs.SCP), true, true)
     ply:setDarkRPVar("rpname", "SCP")
+
     ply:Spawn()
 
     net.Start("OAWC.CharSys.SelectCharacter")
@@ -88,8 +117,8 @@ local function SelectSCP(len,ply)
     hook.Run("OAWC.CharSys.SelectCharacter", ply, -1, "sCP")
 end net.Receive("OAWC.CharSys.SelectSCP", SelectSCP)
 
-
 local function RequestPlayerCharacter(len,ply)
+    ply.Characters = ply.Characters or {}
     OAWC.SQL:Query("SELECT * FROM OAWC_Character WHERE sid = " .. SQLStr(ply:SteamID()), function(data)
         local r = {};
         if data == nil then
@@ -100,19 +129,28 @@ local function RequestPlayerCharacter(len,ply)
             net.Broadcast();
             return; 
         end;
+
             for k,v in pairs(data) do
                 r[v.jobkind] = {
                     id = v.ID,
                     sid = v.sid,
                     name = v.name,
+                    age = v.age,
+                    gender = v.gender,
+                    weight = v.weight,
+                    wallet = v.wallet,
                     lastjob = RPExtraTeams[tonumber(v.lastjob)].command,
                     lastjobinnum = tonumber(v.lastjob), 
                     jobkind = v.jobkind,
                     inventory = util.JSONToTable(v.inventory),
-                    other = util.JSONToTable(v.other)
+                    playerdetails = util.JSONToTable(v.playerdetails)
                 };
             end;
-        ply.Characters = r;
+
+            ply.Characters = r;
+            --PrintTable(r)
+
+            PrintTable(ply.Characters)
 
         net.Start("OAWC.CharSys.RequestPlayerCharacter");
         net.WriteCompressedTable(r);
@@ -121,7 +159,6 @@ local function RequestPlayerCharacter(len,ply)
     end, OAWC.SQL.Error)
 end; net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter);
 
- 
 local function DeleteCharacter(len,ply)
     local int = net.ReadInt(32)
     if not ply.Characters["DCP"] or not ply.Characters["FDP"] and ply.CharacterID == -1 then 
