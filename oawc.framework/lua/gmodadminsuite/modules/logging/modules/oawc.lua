@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 

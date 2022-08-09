@@ -9,16 +9,16 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 
 
-// ** NET
+-- ** NET
 local function Sync()
     local read = net.ReadCompressedTable()
     OAWC.CoreConfig = read
@@ -26,7 +26,7 @@ end
 net.Receive("OAWC.Config.Sync", Sync)
 
 
-// ** Globals
+-- ** Globals
 
 function OAWC.SetConfig()
     net.Start("OAWC.Config.Set")
@@ -41,7 +41,7 @@ end
 OAWC.GetConfig()
 
 
-// ** MENU
+-- ** MENU
 
 function OAWC.UI:OpenConfig()
     if LocalPlayer():HasPermission("OAWC_Config") then
@@ -65,7 +65,7 @@ function OAWC.UI:OpenConfig()
         l.general.tab:Dock(FILL)
 
 
-        // ** Character Manage Init
+        -- ** Character Manage Init
         l.character = vgui.Create("DPanel", l.psheet)
         l.psheet:AddSheet( "Character Manager", l.character, nil )
 
@@ -537,7 +537,7 @@ function OAWC.UI:OpenConfig()
 
 
 
-            // -- ## CHARACTER MANAGER ZONE
+            -- -- ## CHARACTER MANAGER ZONE
 
 
                 l.c = {}

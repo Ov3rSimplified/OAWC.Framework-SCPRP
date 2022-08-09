@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 hook.Add("HUDShouldDraw", "OAWC.Scroll.Disable", function(name)
@@ -312,22 +312,22 @@ hook.Add("HUDPaint", "OAWC.HUDPaint.Scroll", function()
     end
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.737, ScrW() * 0.115, ScrH() * 0.05, 2, 6)
-    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.737, ScrW() * 0.115, ScrH() * 0.05, current == -1 and prettywhite or blackalpha ) // 0
+    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.737, ScrW() * 0.115, ScrH() * 0.05, current == -1 and prettywhite or blackalpha ) -- 0
     draw.SimpleText(hand, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText("[G]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.792, ScrW() * 0.115, ScrH() * 0.05, 2, 6)
-    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.792, ScrW() * 0.115, ScrH() * 0.05, current == 1 and prettywhite or blackalpha) // 1
+    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.792, ScrW() * 0.115, ScrH() * 0.05, current == 1 and prettywhite or blackalpha) -- 1
     draw.SimpleText(prim, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.792 + ScrH() * 0.05 / 2, current == 1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText("[1]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.792 + ScrH() * 0.05 / 2, current == 1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.8471, ScrW() * 0.115, ScrH() * 0.05, 2, 6)
-    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.8471, ScrW() * 0.115, ScrH() * 0.05, current == 2 and prettywhite or blackalpha) // 2
+    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.8471, ScrW() * 0.115, ScrH() * 0.05, current == 2 and prettywhite or blackalpha) -- 2
     draw.SimpleText(sec, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.8471 + ScrH() * 0.05 / 2, current == 2 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText("[2]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.8471 + ScrH() * 0.05 / 2, current == 2 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.9, ScrW() * 0.115, ScrH() * 0.05, 2, 6)
-    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.9, ScrW() * 0.115, ScrH() * 0.05, current == 3 and prettywhite or blackalpha) // 3
+    draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.9, ScrW() * 0.115, ScrH() * 0.05, current == 3 and prettywhite or blackalpha) -- 3
     draw.SimpleText(side, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.9 + ScrH() * 0.05 / 2, current == 3 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
     draw.SimpleText("[3]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.9 + ScrH() * 0.05 / 2, current == 3 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 

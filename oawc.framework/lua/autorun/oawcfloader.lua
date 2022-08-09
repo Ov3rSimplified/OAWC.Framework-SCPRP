@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 
@@ -34,8 +34,8 @@ OAWC.Charactersystem.Source.Synchronisationdata = {}
 OAWC.Charactersystem.Source.Characters = {}
 OAWC.L = OAWC.L or {}
 OAWC.UI = {}
-OAWC.CoreConfig = {}  // Stands for the Configtable for the Core
-OAWC.IConfig = {} // Stands for IngameConfig UI, Funtion etc
+OAWC.CoreConfig = {}  -- Stands for the Configtable for the Core
+OAWC.IConfig = {} -- Stands for IngameConfig UI, Funtion etc
 
 
 if SERVER then

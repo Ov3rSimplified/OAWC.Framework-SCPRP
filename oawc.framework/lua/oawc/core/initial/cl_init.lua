@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 
@@ -37,8 +37,9 @@ end)
 
 
 local scplogo = Material("materials/oawc/logos/scplogo2.png")
+--[[
 hook.Add("HUDPaint", "DoNothingHud", function()
-  /*  if LocalPlayer().DoNothing then
+    if LocalPlayer().DoNothing then
         draw.RoundedBox(0,0,0,ScrW(),ScrH(),Color(57,57,57,230))
         DrawBlurRect(0,0,ScrW(),ScrH(), 3, 6)
 
@@ -47,10 +48,11 @@ hook.Add("HUDPaint", "DoNothingHud", function()
         surface.DrawTexturedRect(-30,ScrH()*0.01,ScrW()*0.15,ScrH()*0.15)
 
         draw.RoundedBox()
-    end*/
+    end
 end)
 
 
 local function OAWCAddLoad()
 end
 hook.Add("OAWCAddLoad", "OAWCAddLoad", OAWCAddLoad )
+--]]

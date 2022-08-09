@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 local blur = Material("pp/blurscreen")
@@ -32,8 +32,8 @@ function OAWC.L:DrawBlurRect(x, y, w, h, amount, density)
     end
 end
 
-// FINDPLAYER function
-// @param info - The Player did you search for
+-- FINDPLAYER function
+-- @param info - The Player did you search for
 
 function OAWC.FindPlayer(info)
     if not info or info == "" then return nil end

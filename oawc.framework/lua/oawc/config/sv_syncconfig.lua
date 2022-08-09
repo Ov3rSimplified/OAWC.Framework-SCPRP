@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 util.AddNetworkString("OAWC.Config.Set")
@@ -51,7 +51,7 @@ local function Get(len,ply)
         if istable(read) then
             local ct = table.Copy(OAWC.CoreConfig)
             local rt = table.GetKeys(read)
-            // Select the keys from the config that are not in the read config. and set the vars that in the read config to nil
+            -- Select the keys from the config that are not in the read config. and set the vars that in the read config to nil
             for k,v in pairs(ct) do
                 for i=1, table.Count(rt) do
                     if k == rt[i] then
@@ -59,7 +59,7 @@ local function Get(len,ply)
                     end
                 end
             end
-            table.Merge(read,ct)  // Merge the configs together.
+            table.Merge(read,ct)  -- Merge the configs together.
             net.Start("OAWC.Config.Sync")
             net.WriteCompressedTable(read)
             net.Send(ply)

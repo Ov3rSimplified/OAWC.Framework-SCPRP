@@ -9,11 +9,11 @@
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
 
-// Informations!
-// Author: TwinKlee
-// Startday: 27.06.2022 / 14:23
-// FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+-- Informations!
+-- Author: TwinKlee
+-- Startday: 27.06.2022 / 14:23
+-- FRAMEWORK FOR THE OAWC SCPRP !!
+-- YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 
@@ -148,8 +148,8 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
         surface.DrawRect(29, scrH * .742 - 1, boxH * 0.62 + 2, boxW * .95 + 2)
         surface.SetDrawColor(94, 94, 94, 140)
         surface.DrawRect(30, scrH * .742, boxH * 0.62, boxW * .95)
-/*
-
+        
+--[[
         if (hp >= maxHp) then
             surface.SetDrawColor(68, 160, 235, 255)
             surface.DrawRect(53, scrH * .952, boxW, boxH)
@@ -157,10 +157,6 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
             surface.SetDrawColor(68, 160, 235, 255)
             surface.DrawRect(53, scrH * .952, boxW * (hp / maxHp), boxH)
         end
-*/
-
-/*
-
 
         if (armor >= maxArmor) then
             surface.SetDrawColor(63, 217, 132, 255)
@@ -169,7 +165,8 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
             surface.SetDrawColor(63, 217, 132, 255)
             surface.DrawRect(53, scrH * .967, boxW * (armor / maxArmor), boxH)
         end
-*/
+--]]
+
         drawVignetteOnBars(53, scrH * .952, boxW, boxH)
        -- drawVignetteOnBars(53, scrH * .967, boxW, boxH)
         drawWhiteRects(scrH * .74)
