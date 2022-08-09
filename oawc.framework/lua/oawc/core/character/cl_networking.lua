@@ -17,10 +17,11 @@
 ]]
 
 local function RequestPlayerCharacter()
-    local read = net.ReadCompressedTable();
-    LocalPlayer().Characters = read;
-    PrintTable(LocalPlayer().Characters);
-end;net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter)
+    local read = net.ReadCompressedTable()
+    LocalPlayer().Characters = read
+    PrintTable(LocalPlayer().Characters)
+end
+net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter)
 
 local function SelectCharacter()
     local read = net.ReadInt(32)

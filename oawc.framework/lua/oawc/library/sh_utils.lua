@@ -102,7 +102,7 @@ function OAWC.L:SimpleScrollingText(scrollid, text, font, x, y, color, ax, ay)
         OAWC.L.scrollingtext_store[scrollid]["text"] = OAWC.L.scrollingtext_store[scrollid]["text"] .. string.sub(text, OAWC.L.scrollingtext_store[scrollid]["count"], OAWC.L.scrollingtext_store[scrollid]["count"])
         OAWC.L.scrollingtext_store[scrollid]["count"] = OAWC.L.scrollingtext_store[scrollid]["count"] + 1
         surface.PlaySound("items/nvg_off.wav")
-    end;
+    end
 
     if (OAWC.L.scrollingtext_store[scrollid]["count"] >= string.len(text)) then
         OAWC.L.scrollingtext_store[scrollid] = nil
@@ -148,7 +148,7 @@ function OAWC.L:CreateTextField(parent)
     panel.OnMousePressed1 = panel.OnMousePressed
     panel.OnMousePressed = function(self)
         surface.PlaySound("items/nvg_off.wav")
-        if (self.disabled) then return false; end
+        if (self.disabled) then return false end
         panel.OnMousePressed1(self)
     end
     panel.OnCursorExited = function(self)

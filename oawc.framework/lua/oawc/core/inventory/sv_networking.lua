@@ -25,15 +25,15 @@ hook.Add("PlayerCanPickupWeapon", "TEST", function(ply, wep)
 end)
 
 hook.Add("PlayerSpawn", "OAWC.GiveSlotWeapons", function(ply)
-    if ply.Characters == nil or table.IsEmpty(ply.Characters) then return end;
-    if ply.CharacterKind == "SCP" then return end;
+    if ply.Characters == nil or table.IsEmpty(ply.Characters) then return end
+    if ply.CharacterKind == "SCP" then return end
     if ply.CharacterID == 0  or ply.CharacterID == nil then else
-    ply:Give("weapon_ohands");
+    ply:Give("weapon_ohands")
     for k,v in pairs(ply.Characters[ply.CharacterKind].inventory.Slot) do
-        if v == "NULL" then continue end;
+        if v == "NULL" then continue end
             if weapons.Get(v) then
-                ply:Give(v);
-            end;
-        end;
-    end;
-end);
+                ply:Give(v)
+            end
+        end
+    end
+end)

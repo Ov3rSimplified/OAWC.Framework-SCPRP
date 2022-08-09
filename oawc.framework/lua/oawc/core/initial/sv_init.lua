@@ -62,6 +62,6 @@ hook.Add("PlayerSpawn", "CheckInitplayer", function(ply)
         net.WriteInt(0, 32)
         net.Send(ply)
       end)
-  end;
+  end
 end)
 

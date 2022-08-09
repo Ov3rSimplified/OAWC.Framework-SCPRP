@@ -16,57 +16,59 @@
 // YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
-util.AddNetworkString("OAWC.Config.Set");
-util.AddNetworkString("OAWC.Config.Get");
-util.AddNetworkString("OAWC.Config.Sync");
+util.AddNetworkString("OAWC.Config.Set")
+util.AddNetworkString("OAWC.Config.Get")
+util.AddNetworkString("OAWC.Config.Sync")
 
 local function Set(len,ply)
-    local read = net.ReadCompressedTable();
+    local read = net.ReadCompressedTable()
     if istable(read) then
         if ply:HasPermission("OAWC_Config") then
-            OAWC.CoreConfig = read;
+            OAWC.CoreConfig = read
             if file.IsDir("OAWC/Config", "DATA") then
-                file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig));
-                net.Start("OAWC.Config.Sync");
-                net.WriteCompressedTable(read);
-                net.Broadcast();
+                file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig))
+                net.Start("OAWC.Config.Sync")
+                net.WriteCompressedTable(read)
+                net.Broadcast()
             else
-                file.CreateDir("OAWC/Config");
-                file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig));
-                net.Start("OAWC.Config.Sync");
-                net.WriteCompressedTable(read);
-                net.Broadcast();
-            end;
+                file.CreateDir("OAWC/Config")
+                file.Write("OAWC/Config/config.json", util.TableToJSON(OAWC.CoreConfig))
+                net.Start("OAWC.Config.Sync")
+                net.WriteCompressedTable(read)
+                net.Broadcast()
+            end
         else
             ply:Kick("You are not allowed to change the config!")
             return
-        end;
-    end;
-end; net.Receive("OAWC.Config.Set", Set);
+        end
+    end
+end
+net.Receive("OAWC.Config.Set", Set)
 
 local function Get(len,ply)
     if file.Exists("OAWC/Config/config.json", "DATA") then
-        local read = util.JSONToTable(file.Read("OAWC/Config/config.json", "DATA"));
+        local read = util.JSONToTable(file.Read("OAWC/Config/config.json", "DATA"))
         if istable(read) then
-            local ct = table.Copy(OAWC.CoreConfig);
-            local rt = table.GetKeys(read);
+            local ct = table.Copy(OAWC.CoreConfig)
+            local rt = table.GetKeys(read)
             // Select the keys from the config that are not in the read config. and set the vars that in the read config to nil
             for k,v in pairs(ct) do
                 for i=1, table.Count(rt) do
                     if k == rt[i] then
-                        ct[k] = nil;
-                    end;
-                end;
-            end;
-            table.Merge(read,ct);  // Merge the configs together.
-            net.Start("OAWC.Config.Sync");
-            net.WriteCompressedTable(read);
-            net.Send(ply);
+                        ct[k] = nil
+                    end
+                end
+            end
+            table.Merge(read,ct)  // Merge the configs together.
+            net.Start("OAWC.Config.Sync")
+            net.WriteCompressedTable(read)
+            net.Send(ply)
         elseif read == nil then
-            net.Start("OAWC.Config.Sync");
-            net.WriteCompressedTable(OAWC.CoreConfig);
-            net.Send(ply);
-        end;
-    end;
-end; net.Receive("OAWC.Config.Get", Get);
+            net.Start("OAWC.Config.Sync")
+            net.WriteCompressedTable(OAWC.CoreConfig)
+            net.Send(ply)
+        end
+    end
+end
+net.Receive("OAWC.Config.Get", Get)
 

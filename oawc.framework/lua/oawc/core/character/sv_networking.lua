@@ -17,13 +17,13 @@
 ]]
 --[[ NETMESSAGES ]]
 
-util.AddNetworkString("OAWC.CharSys.CreateCharacter");
-util.AddNetworkString("OAWC.CharSys.UpdateNumberInformation");
-util.AddNetworkString("OAWC.CharSys.SelectCharacter");
-util.AddNetworkString("OAWC.CharSys.DeleteCharacter");
-util.AddNetworkString("OAWC.CharSys.SelectSCP");
-util.AddNetworkString("OAWC.CharSys.UpdateName");
-util.AddNetworkString("OAWC.CharSys.RequestPlayerCharacter");
+util.AddNetworkString("OAWC.CharSys.CreateCharacter")
+util.AddNetworkString("OAWC.CharSys.UpdateNumberInformation")
+util.AddNetworkString("OAWC.CharSys.SelectCharacter")
+util.AddNetworkString("OAWC.CharSys.DeleteCharacter")
+util.AddNetworkString("OAWC.CharSys.SelectSCP")
+util.AddNetworkString("OAWC.CharSys.UpdateName")
+util.AddNetworkString("OAWC.CharSys.RequestPlayerCharacter")
 
 local function CreateCharacter(len,ply)
     local read = net.ReadCompressedTable()
@@ -55,34 +55,34 @@ local function SelectCharacter(len,ply)
     local sid = net.ReadString()
 
     if ply:SteamID() == sid then
-        if ply.CharacterID == read then return end;
-        if not isnumber(read) then return end;
-        if not isstring(str) then return end;
-        if not str == "FDP" and not str == "DCP" then return end;
+        if ply.CharacterID == read then return end
+        if not isnumber(read) then return end
+        if not isstring(str) then return end
+        if not str == "FDP" and not str == "DCP" then return end
 
-        ply.CharacterID = read;
-        ply.CharacterKind = str;
+        ply.CharacterID = read
+        ply.CharacterKind = str
 
-        ply:SetSpectatorMode(false);
-        ply:setDarkRPVar("money", tonumber(ply.Characters[str].wallet));
+        ply:SetSpectatorMode(false)
+        ply:setDarkRPVar("money", tonumber(ply.Characters[str].wallet))
         print(ply.Characters[str].wallet)
-        ply:changeTeam(tonumber(ply.Characters[str].lastjobinnum), true, true);
-        ply:setDarkRPVar("rpname", tostring(ply.Characters[str].name));
-        ply:Spawn();
+        ply:changeTeam(tonumber(ply.Characters[str].lastjobinnum), true, true)
+        ply:setDarkRPVar("rpname", tostring(ply.Characters[str].name))
+        ply:Spawn()
 
 
-        net.Start("OAWC.CharSys.SelectCharacter");
-        net.WriteInt(read, 32);
-        net.WriteString(str);
-        net.Send(ply);
-        hook.Run("OAWC.CharSys.SelectCharacter", ply, read, str);
+        net.Start("OAWC.CharSys.SelectCharacter")
+        net.WriteInt(read, 32)
+        net.WriteString(str)
+        net.Send(ply)
+        hook.Run("OAWC.CharSys.SelectCharacter", ply, read, str)
 
-        OAWC:Notify("info", ply, "Viel Erfolg!", "Viel Spaß und Erfolg wünschen wir dir beim Spielen <3", 1);
+        OAWC:Notify("info", ply, "Viel Erfolg!", "Viel Spaß und Erfolg wünschen wir dir beim Spielen <3", 1)
     else
         --ply:Kick("You've been kicked for try to cheat! #ErrorCode 12")
         print("[OAWC] " .. ply:Nick() .. " tried to cheat!")
-        return;
-    end;
+        return
+    end
 end net.Receive("OAWC.CharSys.SelectCharacter", SelectCharacter)
 
 
@@ -92,9 +92,10 @@ local function DarkRPValueChanged(ply, varname, oldValue, newValue)
     if varname == "money" then
         OAWC.SQL:Query("UPDATE `OAWC_Character` SET `wallet` = " .. newValue .. " WHERE `ID` = " .. SQLStr(ply.Characters[ply.CharacterKind].id) .. "", nil, OAWC.SQL.Error)
         print(ply.Characters[ply.CharacterKind].wallet)
-    end;
+    end
 
-end; hook.Add("DarkRPVarChanged", "OAWC.SnychDRPV", DarkRPValueChanged)
+end
+hook.Add("DarkRPVarChanged", "OAWC.SnychDRPV", DarkRPValueChanged)
 
 concommand.Add("AD" , function(ply, cmd, args)
     ply:addMoney(tonumber(args[1]))
@@ -120,15 +121,15 @@ end net.Receive("OAWC.CharSys.SelectSCP", SelectSCP)
 local function RequestPlayerCharacter(len,ply)
     ply.Characters = ply.Characters or {}
     OAWC.SQL:Query("SELECT * FROM OAWC_Character WHERE sid = " .. SQLStr(ply:SteamID()), function(data)
-        local r = {};
+        local r = {}
         if data == nil then
-            r = {};
-            ply.Characters = r;
-            net.Start("OAWC.CharSys.RequestPlayerCharacter");
-            net.WriteCompressedTable(r);
-            net.Broadcast();
-            return;
-        end;
+            r = {}
+            ply.Characters = r
+            net.Start("OAWC.CharSys.RequestPlayerCharacter")
+            net.WriteCompressedTable(r)
+            net.Broadcast()
+            return
+        end
 
             for k,v in pairs(data) do
                 r[v.jobkind] = {
@@ -144,20 +145,21 @@ local function RequestPlayerCharacter(len,ply)
                     jobkind = v.jobkind,
                     inventory = util.JSONToTable(v.inventory),
                     playerdetails = util.JSONToTable(v.playerdetails)
-                };
-            end;
+                }
+            end
 
-            ply.Characters = r;
+            ply.Characters = r
             --PrintTable(r)
 
             PrintTable(ply.Characters)
 
-        net.Start("OAWC.CharSys.RequestPlayerCharacter");
-        net.WriteCompressedTable(r);
-        net.Broadcast();
+        net.Start("OAWC.CharSys.RequestPlayerCharacter")
+        net.WriteCompressedTable(r)
+        net.Broadcast()
 
     end, OAWC.SQL.Error)
-end; net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter);
+end
+net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter)
 
 local function DeleteCharacter(len,ply)
     local int = net.ReadInt(32)
@@ -184,10 +186,11 @@ local function DeleteCharacter(len,ply)
 end net.Receive("OAWC.CharSys.DeleteCharacter", DeleteCharacter)
 
 local function UpdateName(len,ply)
-    local int = net.ReadInt(32);
-    local str = net.ReadString();
-    OAWC.SQL:Query("UPDATE OAWC_Character SET name = " .. SQLStr(str) .. " WHERE ID = " .. int, nil,  OAWC.SQL.Error);
-end; net.Receive("OAWC.CharSys.UpdateName", UpdateName)
+    local int = net.ReadInt(32)
+    local str = net.ReadString()
+    OAWC.SQL:Query("UPDATE OAWC_Character SET name = " .. SQLStr(str) .. " WHERE ID = " .. int, nil,  OAWC.SQL.Error)
+end
+net.Receive("OAWC.CharSys.UpdateName", UpdateName)
 
 
 --[[

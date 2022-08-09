@@ -268,10 +268,10 @@ function OAWC.Charactersystem.UI:MainMenu()
                 local txt1 = v.title
                 p.Top.Paint = function(self,w,h)
                     if LocalPlayer().Characters[v.kind] then
-                        txt1 = LocalPlayer().Characters[v.kind].name;
+                        txt1 = LocalPlayer().Characters[v.kind].name
                     else
-                        txt1 = v.title;
-                    end;
+                        txt1 = v.title
+                    end
 
                     if (!self.scrollid or self.scrollid > 0) then
                         self.scrollid = OAWC.L:SimpleScrollingText(self.scrollid, txt1, "OAWC.CHS.CreateTop", w/2, h/2, Color(255,255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER )

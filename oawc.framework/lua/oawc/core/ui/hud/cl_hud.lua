@@ -28,10 +28,10 @@ surface.CreateFont("AmmoFont", {
 })
 
 
-OAWC:RegisterFont("OAWC.HUD.Compass.Tri", {font = "Lato", size = ScrH() * 0.009, weight = 600, shadow = true, extended = true});
+OAWC:RegisterFont("OAWC.HUD.Compass.Tri", {font = "Lato", size = ScrH() * 0.009, weight = 600, shadow = true, extended = true})
 
 
-OAWC:RegisterFont("OAWC.HUD.Compass.BigLetters", {font = "Lato", size = ScrH() * 0.018, weight = 600, shadow = true, extended = true});
+OAWC:RegisterFont("OAWC.HUD.Compass.BigLetters", {font = "Lato", size = ScrH() * 0.018, weight = 600, shadow = true, extended = true})
 
 OAWC:RegisterFont("OAWC.HUD.Compass.SmallLetters", {font = "Montserrat", size = ScrH() * 0.011, weight = 400, shadow = true, extended = true} )
 
@@ -121,7 +121,7 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
     }
 
     if (ply:Alive()) then
-        if LocalPlayer():InVehicle() then return end;
+        if LocalPlayer():InVehicle() then return end
         if (weapon:IsValid()) then
         --    if (weapon:Clip1() != -1) then
           --      draw.WordBox(2, scrW * .15, scrH * .95, weapon:Clip1() .. "/" .. ply:GetAmmoCount(weapon:GetPrimaryAmmoType()), "AmmoFont", Color(0, 0, 0, 120), Color(255, 255, 255, 120), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)

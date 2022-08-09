@@ -71,9 +71,9 @@ function OAWC.Initialize:LoadDir(dir)
 end
 
 local ModuleLoader = function()
-    local files, folder = file.Find("oawc/modules/".. "*", "LUA");
+    local files, folder = file.Find("oawc/modules/".. "*", "LUA")
     for k,v in pairs(folder) do
-        local filee = file.Find("oawc/modules/".. v .. "/*", "LUA");
+        local filee = file.Find("oawc/modules/".. v .. "/*", "LUA")
         for key, val in pairs(filee) do
             if file.Exists("oawc/modules/" .. v .. "/sh_index.lua", "LUA") then
                 local succ, err = pcall(include, "oawc/modules/" .. v .. "/sh_index.lua")
@@ -81,60 +81,60 @@ local ModuleLoader = function()
                     if err["SHARED"] then
                     for sh,_ in pairs(err["SHARED"]) do
                             if file.Exists("oawc/modules/" .. v .. "/" .. sh, "LUA") then
-                                local load = include("oawc/modules/" .. v .. "/" .. sh);
-                                if load then load() end;
-                                AddCSLuaFile("oawc/modules/" .. v .. "/" .. sh);
-                            end;
-                        end;
-                    end;
+                                local load = include("oawc/modules/" .. v .. "/" .. sh)
+                                if load then load() end
+                                AddCSLuaFile("oawc/modules/" .. v .. "/" .. sh)
+                            end
+                        end
+                    end
                     if err["SERVER"] then
                         for sv,_ in pairs(err["CLIENT"]) do
                             if file.Exists("oawc/modules/" .. v .. "/" .. sv, "LUA") then
                                 if SERVER then
-                                    local load = include("oawc/modules/" .. v .. "/" .. sv);
-                                    if load then load() end;
-                                end;
-                            end;
-                        end;
-                    end;
+                                    local load = include("oawc/modules/" .. v .. "/" .. sv)
+                                    if load then load() end
+                                end
+                            end
+                        end
+                    end
                     if err["CLIENT"] then
                         for cl,_ in pairs(err["CLIENT"]) do
                             if file.Exists("oawc/modules/" .. v .. "/" .. cl, "LUA") then
                                 if CLIENT then
-                                    local load = include("oawc/modules/" .. v .. "/" .. cl);
-                                    if load then load() end;
-                                end;
-                                AddCSLuaFile("oawc/modules/" .. v .. "/" .. cl);
-                            end;
-                        end;
-                    end;
-                end;
-            end;
-        end;
-    end;
-end;
+                                    local load = include("oawc/modules/" .. v .. "/" .. cl)
+                                    if load then load() end
+                                end
+                                AddCSLuaFile("oawc/modules/" .. v .. "/" .. cl)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end
 
 function OAWC.Initialize:LoadFramework()
-    OAWC.Initialize:LoadDir("oawc/config");
-    OAWC.Initialize:LoadDir("oawc/core/initial");
-    OAWC.Initialize:LoadDir("oawc/core/sql");
-    OAWC.Initialize:LoadDir("oawc/library");
-    OAWC.Initialize:LoadDir("oawc/core/character");
-    OAWC.Initialize:LoadDir("oawc/core/inventory");
-    OAWC.Initialize:LoadDir("oawc/core/ui");
-    OAWC.Initialize:LoadDir("oawc/core/ui/hud");
-    OAWC.Initialize:LoadDir("oawc/core/ui/playerbinds");
-    ModuleLoader();
-end;
+    OAWC.Initialize:LoadDir("oawc/config")
+    OAWC.Initialize:LoadDir("oawc/core/initial")
+    OAWC.Initialize:LoadDir("oawc/core/sql")
+    OAWC.Initialize:LoadDir("oawc/library")
+    OAWC.Initialize:LoadDir("oawc/core/character")
+    OAWC.Initialize:LoadDir("oawc/core/inventory")
+    OAWC.Initialize:LoadDir("oawc/core/ui")
+    OAWC.Initialize:LoadDir("oawc/core/ui/hud")
+    OAWC.Initialize:LoadDir("oawc/core/ui/playerbinds")
+    ModuleLoader()
+end
 
 
 if GAMEMODE then
-    OAWC.Initialize:LoadFramework();
-end;
+    OAWC.Initialize:LoadFramework()
+end
 OAWC.Initialize:LoadFramework()
 hook.Add("InitPostEntity", "OAWC.Framework.Initialize", function()
-    OAWC.Initialize:LoadFramework();
-end);
+    OAWC.Initialize:LoadFramework()
+end)
 
 
 

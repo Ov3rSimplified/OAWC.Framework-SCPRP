@@ -52,4 +52,5 @@ end)
 
 
 local function OAWCAddLoad()
-end; hook.Add("OAWCAddLoad", "OAWCAddLoad", OAWCAddLoad );
+end
+hook.Add("OAWCAddLoad", "OAWCAddLoad", OAWCAddLoad )

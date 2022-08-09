@@ -47,7 +47,7 @@ if SERVER then
                 `level` INT NOT NULL,
                 `playerdetails` TEXT NOT NULL,
                 PRIMARY KEY (`ID`)
-            );
+            )
             ]]
     else
         query = [[
@@ -69,7 +69,7 @@ if SERVER then
                 `model` TEXT NOT NULL,
                 `level` INT NOT NULL,
                 `playerdetails` TEXT NOT NULL,
-                );
+                )
             ]]
     end
 
