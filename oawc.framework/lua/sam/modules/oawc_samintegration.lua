@@ -14,7 +14,7 @@ command.new("enablescroll")
 
     :SetPermission("OAWC_EnableScroll", "OAWC", "admin")
 
-	:Help("Enable Scroll")
+    :Help("Enable Scroll")
 
     :OnExecute(function(ply)
         print("Scroll Enabled")

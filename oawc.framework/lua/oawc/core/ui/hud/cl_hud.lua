@@ -21,10 +21,10 @@
 
 surface.CreateFont("AmmoFont", {
     font = "Digital-7",
-	size = 23,
-	weight = 1000,
-	antialias = true,
-	shadow = true,
+    size = 23,
+    weight = 1000,
+    antialias = true,
+    shadow = true,
 })
 
 
@@ -104,8 +104,8 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
 
     triangleStand = {
         {x = 17, y = scrH * .745},
-	    {x = 17, y = scrH * .74},
-	    {x = 22, y = scrH * .742}
+        {x = 17, y = scrH * .74},
+        {x = 22, y = scrH * .742}
     }
 
     triangleSit = {

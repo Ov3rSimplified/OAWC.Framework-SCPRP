@@ -23,7 +23,7 @@ function OAWC.L:DrawBlurRect(x, y, w, h, amount, density)
     surface.SetMaterial(blur)
 
     for i = 1, density do
-		blur:SetFloat("$blur", (i / 3) * (amount or 6))
+        blur:SetFloat("$blur", (i / 3) * (amount or 6))
         blur:Recompute()
         render.UpdateScreenEffectTexture()
         render.SetScissorRect(x, y, x + w, y + h, true)
@@ -61,20 +61,20 @@ function OAWC.FindPlayer(info)
 end
 
 function OAWC:RegisterFont(name,tbl)
-	surface.CreateFont( name, tbl)
+    surface.CreateFont( name, tbl)
 end
 
 function net.WriteCompressedTable(tbl)
-	local data = util.TableToJSON(tbl)
-	data = util.Compress(data)
-	net.WriteInt(#data, 32)
-	net.WriteData(data, #data)
+    local data = util.TableToJSON(tbl)
+    data = util.Compress(data)
+    net.WriteInt(#data, 32)
+    net.WriteData(data, #data)
 end
 
 function net.ReadCompressedTable()
-	local num = net.ReadInt(32)
-	local data = util.Decompress(net.ReadData(num))
-	return util.JSONToTable(data)
+    local num = net.ReadInt(32)
+    local data = util.Decompress(net.ReadData(num))
+    return util.JSONToTable(data)
 end
 
 OAWC.L.scrollingtext_store = {}
@@ -113,48 +113,48 @@ function OAWC.L:SimpleScrollingText(scrollid, text, font, x, y, color, ax, ay)
 end
 
 function OAWC.L:CreateTextField(parent)
-	local panel = vgui.Create("DTextEntry", parent)
-	panel.Paint = function(self, w, h)
-		self.alpha = self.alpha or 0
-		self.alpha2 = self.alpha2 or 0
+    local panel = vgui.Create("DTextEntry", parent)
+    panel.Paint = function(self, w, h)
+        self.alpha = self.alpha or 0
+        self.alpha2 = self.alpha2 or 0
         self.Rounded = self.Rounded or 0
-		if (self.hovered) then
-			self.alpha = Lerp(FrameTime()*3, self.alpha, 1)
-		else
-			self.alpha = Lerp(FrameTime()*6, self.alpha, 0)
-		end
-		if (self:IsEditing()) then
-			self.alpha2 = Lerp(FrameTime()*3, self.alpha2, 1)
-		else
-			self.alpha2 = Lerp(FrameTime()*6, self.alpha2, 0)
-		end
+        if (self.hovered) then
+            self.alpha = Lerp(FrameTime()*3, self.alpha, 1)
+        else
+            self.alpha = Lerp(FrameTime()*6, self.alpha, 0)
+        end
+        if (self:IsEditing()) then
+            self.alpha2 = Lerp(FrameTime()*3, self.alpha2, 1)
+        else
+            self.alpha2 = Lerp(FrameTime()*6, self.alpha2, 0)
+        end
 
-		draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(0, 0, 0, 150))
-		draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 255, 255, 35*self.alpha))
+        draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(0, 0, 0, 150))
+        draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 255, 255, 35*self.alpha))
         if self.SetColor == nil then
-		    draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 209, 55, 75*self.alpha2))
+            draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 209, 55, 75*self.alpha2))
         else
             draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(self.SetColor.r, self.SetColor.g, self.SetColor.b, 75*self.alpha2))
         end
-		if (self:GetText() == "") then
-			draw.SimpleText(self:GetPlaceholderText(), "OAWC.CHS.Test", 5, h/2, Color(255, 255, 255, 100), 0, 1)
-		end
-		draw.SimpleText(self:GetText(), "OAWC.CHS.Test", 5, h/2, Color(255, 255, 255, 255), 0, 1)
-	end
-	panel.OnCursorEntered = function(self)
-		self.hovered = true
-		surface.PlaySound("physics/metal/metal_popcan_impact_hard1.wav")
-	end
-	panel.OnMousePressed1 = panel.OnMousePressed
-	panel.OnMousePressed = function(self)
-		surface.PlaySound("items/nvg_off.wav")
-		if (self.disabled) then return false; end
-		panel.OnMousePressed1(self)
-	end
-	panel.OnCursorExited = function(self)
-		self.hovered = false
-	end
-	return panel
+        if (self:GetText() == "") then
+            draw.SimpleText(self:GetPlaceholderText(), "OAWC.CHS.Test", 5, h/2, Color(255, 255, 255, 100), 0, 1)
+        end
+        draw.SimpleText(self:GetText(), "OAWC.CHS.Test", 5, h/2, Color(255, 255, 255, 255), 0, 1)
+    end
+    panel.OnCursorEntered = function(self)
+        self.hovered = true
+        surface.PlaySound("physics/metal/metal_popcan_impact_hard1.wav")
+    end
+    panel.OnMousePressed1 = panel.OnMousePressed
+    panel.OnMousePressed = function(self)
+        surface.PlaySound("items/nvg_off.wav")
+        if (self.disabled) then return false; end
+        panel.OnMousePressed1(self)
+    end
+    panel.OnCursorExited = function(self)
+        self.hovered = false
+    end
+    return panel
 end
 
 

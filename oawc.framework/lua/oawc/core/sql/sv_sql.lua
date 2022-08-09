@@ -22,185 +22,185 @@ local SQL = {}
 
 
 concommand.Add("SQL.DeleteTable", function(ply,_,args)
-	OAWC.SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
+    OAWC.SQL:Query("DROP TABLE IF EXISTS `".. args[1] .."`")
 end)
 --[[---------------------------------------------------------
-	Name: Setup
+    Name: Setup
 -----------------------------------------------------------]]
 SQL.config = {}
 SQL.config = {
-	mysql = OAWC.Config.SQL.UseMySQL or false,
-	host = OAWC.Config.SQL.HostIP or "",
-	username = OAWC.Config.SQL.Username or "",
-	password = OAWC.Config.SQL.Password or "",
-	schema = OAWC.Config.SQL.Databasename or "",
-	port = OAWC.Config.SQL.Port or 3306
+    mysql = OAWC.Config.SQL.UseMySQL or false,
+    host = OAWC.Config.SQL.HostIP or "",
+    username = OAWC.Config.SQL.Username or "",
+    password = OAWC.Config.SQL.Password or "",
+    schema = OAWC.Config.SQL.Databasename or "",
+    port = OAWC.Config.SQL.Port or 3306
 }
 
 --[[---------------------------------------------------------
-	Name: Functions
+    Name: Functions
 -----------------------------------------------------------]]
 function SQL.Constructor(self, config)
-	local sql = {}
+    local sql = {}
 
-	config = config or {}
+    config = config or {}
 
-	sql.config = {
-		mysql = OAWC.Config.SQL.UseMySQL or false,
-		host = OAWC.Config.SQL.HostIP or "",
-		username = OAWC.Config.SQL.Username or "",
-		password = OAWC.Config.SQL.Password or "",
-		schema = OAWC.Config.SQL.Databasename or "",
-		port = OAWC.Config.SQL.Port or 3306
-	}
+    sql.config = {
+        mysql = OAWC.Config.SQL.UseMySQL or false,
+        host = OAWC.Config.SQL.HostIP or "",
+        username = OAWC.Config.SQL.Username or "",
+        password = OAWC.Config.SQL.Password or "",
+        schema = OAWC.Config.SQL.Databasename or "",
+        port = OAWC.Config.SQL.Port or 3306
+    }
 
-	mysqloo.onConnected = function() end
-	sql.cache = {}
+    mysqloo.onConnected = function() end
+    sql.cache = {}
 
-	setmetatable(sql, SQL)
+    setmetatable(sql, SQL)
 
-	sql:RequireModule()
+    sql:RequireModule()
 
-	return sql
+    return sql
 end
 
 local function querymysql(self, query, callback, errorCallback)
-	if not query or not self.db then return end
+    if not query or not self.db then return end
 
-	local q = self.db:query(query)
+    local q = self.db:query(query)
 
-	function q:onSuccess(data)
-		if callback then
-			callback(data)
-		end
-	end
+    function q:onSuccess(data)
+        if callback then
+            callback(data)
+        end
+    end
 
-	function q:onError(_, err)
-		if not self.db or self.db:status() == mysqlOO.DATABASE_NOT_CONNECTED then
-			table.insert(self.cache, {
-				query = query,
-				callback = callback,
-				errorCallback = errorCallback
-			})
+    function q:onError(_, err)
+        if not self.db or self.db:status() == mysqlOO.DATABASE_NOT_CONNECTED then
+            table.insert(self.cache, {
+                query = query,
+                callback = callback,
+                errorCallback = errorCallback
+            })
 
-			mysqloo:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
+            mysqloo:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
 
-			return
-		end
+            return
+        end
 
-		if errorCallback then
-			errorCallback(err)
-		end
-	end
+        if errorCallback then
+            errorCallback(err)
+        end
+    end
 
-	q:start()
+    q:start()
 end
 
 local function querySQLite(self, query, callback, errorCallback)
-	if not query then return end
+    if not query then return end
 
-	sql.m_strError = ""
+    sql.m_strError = ""
 
-	local lastError = sql.LastError()
-	local result = sql.Query(query)
+    local lastError = sql.LastError()
+    local result = sql.Query(query)
 
-	if sql.LastError() and sql.LastError() != lastError then
-			local err = sql.LastError()
+    if sql.LastError() and sql.LastError() != lastError then
+            local err = sql.LastError()
 
-			if errorCallback then
-				errorCallback(err, query)
-			end
+            if errorCallback then
+                errorCallback(err, query)
+            end
 
-			return
-	end
+            return
+    end
 
-	if callback then
-		callback(result)
-	end
+    if callback then
+        callback(result)
+    end
 end
 
 --[[---------------------------------------------------------
-	Name: Meta Function
+    Name: Meta Function
 -----------------------------------------------------------]]
 function SQL:RequireModule()
-	if not self.config.mysql then return end
+    if not self.config.mysql then return end
 
-	if not pcall(require, "mysqloo") then
-		error("Couldn't find mysqlOO. Please install https://github.com/FredyH/mysqlOO. Reverting to SQLite")
+    if not pcall(require, "mysqloo") then
+        error("Couldn't find mysqlOO. Please install https://github.com/FredyH/mysqlOO. Reverting to SQLite")
 
-		self.config.mysql = false
-	end
+        self.config.mysql = false
+    end
 end
 
 function SQL:SetConfig(config)
-	if not config or not type(config) == "table" then return end
+    if not config or not type(config) == "table" then return end
 
-	self:RequireModule()
+    self:RequireModule()
 
-	self.config = config
+    self.config = config
 end
 
 function SQL:Connect()
-	if self.config.mysql then
-		self.db = mysqloo.connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
+    if self.config.mysql then
+        self.db = mysqloo.connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
 
-		self.db.onConnectionFailed = function(_, msg)
-			timer.Simple(5, function()
-				if not self then return end
+        self.db.onConnectionFailed = function(_, msg)
+            timer.Simple(5, function()
+                if not self then return end
 
-				self:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
-			end)
+                self:Connect(self.config.host, self.config.username, self.config.password, self.config.schema, self.config.port)
+            end)
 
-			error("Connection failed! " .. tostring(msg) ..	"\nTrying again in 5 seconds.")
-		end
+            error("Connection failed! " .. tostring(msg) ..    "\nTrying again in 5 seconds.")
+        end
 
-		mysqloo.onConnected = function()
-			for k, v in pairs(self.cache or {}) do
-				self:Query(v.query, v.callback, v.errorCallback)
-			end
+        mysqloo.onConnected = function()
+            for k, v in pairs(self.cache or {}) do
+                self:Query(v.query, v.callback, v.errorCallback)
+            end
 
-			self.cache = {}
+            self.cache = {}
 
-			mysqloo.onConnected()
-		end
+            mysqloo.onConnected()
+        end
 
-		self.db:connect()
-	end
+        self.db:connect()
+    end
 end
 
 function SQL:Disconnect()
-	if IsValid(self.db) then
-		self.db:disconnect()
-	end
+    if IsValid(self.db) then
+        self.db:disconnect()
+    end
 end
 
 function SQL:Query(query, callback, errorCallback)
-	local func = self.config.mysql and querymysql or querySQLite
+    local func = self.config.mysql and querymysql or querySQLite
 
-	func(self, query, callback, errorCallback)
+    func(self, query, callback, errorCallback)
 end
 
 
 function SQL:UsingMySQL()
-	print(OAWC.Config.SQL.UseMySQL)
-	--return OAWC.Config.SQL.UseMySQL
+    print(OAWC.Config.SQL.UseMySQL)
+    --return OAWC.Config.SQL.UseMySQL
 end
 
 function SQL:Escape(str)
-	if self:UsingMySQL() then
-		return string.Replace(self.db:escape(tostring(str)), "'", "")
-	else
-		return string.Replace(sql.SQLStr(str), "'", "")
-	end
+    if self:UsingMySQL() then
+        return string.Replace(self.db:escape(tostring(str)), "'", "")
+    else
+        return string.Replace(sql.SQLStr(str), "'", "")
+    end
 end
 
 --[[---------------------------------------------------------
-	Name: Meta Tables
+    Name: Meta Tables
 -----------------------------------------------------------]]
 SQL.__index = SQL
 
 setmetatable(SQL, {
-	__call = SQL.Constructor
+    __call = SQL.Constructor
 })
 
 
@@ -208,7 +208,7 @@ setmetatable(SQL, {
 
 
 if SQL then
-	SQL:Disconnect()
+    SQL:Disconnect()
 end
 
 SQL:Connect()
