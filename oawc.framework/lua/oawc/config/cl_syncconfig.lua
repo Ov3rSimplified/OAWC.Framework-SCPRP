@@ -1,10 +1,10 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
@@ -13,11 +13,11 @@
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
-]] 
- 
-  
-   
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
+]]
+
+
+
 // ** NET
 local function Sync()
     local read = net.ReadCompressedTable();
@@ -25,10 +25,10 @@ local function Sync()
 end; net.Receive("OAWC.Config.Sync", Sync);
 
 
-// ** Globals   
+// ** Globals
 
 function OAWC.SetConfig()
-    net.Start("OAWC.Config.Set");   
+    net.Start("OAWC.Config.Set");
     net.WriteCompressedTable(OAWC.CoreConfig);
     net.SendToServer();
 end;
@@ -36,14 +36,14 @@ end;
 function OAWC.GetConfig()
     net.Start("OAWC.Config.Get");
     net.SendToServer();
-end;  
-OAWC.GetConfig()  
+end;
+OAWC.GetConfig()
 
 
 // ** MENU
 
 function OAWC.UI:OpenConfig()
-    if LocalPlayer():HasPermission("OAWC_Config") then 
+    if LocalPlayer():HasPermission("OAWC_Config") then
 
         local frame = vgui.Create("DFrame");
         frame:SetSize(850,500);
@@ -59,10 +59,10 @@ function OAWC.UI:OpenConfig()
 
         l.general = vgui.Create("DPanel", l.psheet);
         l.psheet:AddSheet( "General", l.general, nil );
- 
+
         l.general.tab = vgui.Create("DColumnSheet", l.general);
         l.general.tab:Dock(FILL);
-         
+
 
         // ** Character Manage Init
         l.character = vgui.Create("DPanel", l.psheet);
@@ -115,38 +115,38 @@ function OAWC.UI:OpenConfig()
                 Panel.Configfield:DockMargin(10,10,10,10);
                 Panel.Configfield:SetWide(ScrW()*0.2);
 
-                if element == "Text" or element == "NumberText" then 
+                if element == "Text" or element == "NumberText" then
                     Panel.Configfield.TextEntry = vgui.Create("DTextEntry", Panel.Configfield);
                     Panel.Configfield.TextEntry:Dock(LEFT);
                     Panel.Configfield.TextEntry:DockMargin(0,0,0,0);
                     Panel.Configfield.TextEntry:SetWide(ScrW()*0.15);
                     Panel.Configfield.TextEntry:SetPlaceholderText("Enter " .. name .. "...");
-                    Panel.Configfield.TextEntry:SetText(tostring(var) or ""); 
+                    Panel.Configfield.TextEntry:SetText(tostring(var) or "");
                     Panel.Configfield.TextEntry:SetFont("ScoreboardDefault");
-                    if element == "NumberText" then 
+                    if element == "NumberText" then
                         Panel.Configfield.TextEntry:SetNumeric(true);
                     end;
-                elseif element == "DropDown" then 
+                elseif element == "DropDown" then
                     Panel.Configfield.DropDown = vgui.Create("DComboBox", Panel.Configfield);
                     Panel.Configfield.DropDown:Dock(LEFT);
                     Panel.Configfield.DropDown:DockMargin(0,0,0,0);
                     Panel.Configfield.DropDown:SetWide(ScrW()*0.15);
                     Panel.Configfield.DropDown:SetValue( tostring(var) or "Select" )
                     Panel.Configfield.DropDown:SetFont("ScoreboardDefault");
-                    for k,v in pairs(extra) do 
+                    for k,v in pairs(extra) do
                         Panel.Configfield.DropDown:AddChoice(v.value, v.data, v.select, v.icon);
                     end;
                     function Panel.Configfield.DropDown:OnSelect( index, text, data )
                         savefunc(data);
                     end;
-                elseif element == "ODropDown" then 
+                elseif element == "ODropDown" then
                     Panel.Configfield.DropDown = vgui.Create("DComboBox", Panel.Configfield);
                     Panel.Configfield.DropDown:Dock(LEFT);
                     Panel.Configfield.DropDown:DockMargin(0,0,0,0);
                     Panel.Configfield.DropDown:SetWide(ScrW()*0.15);
                     Panel.Configfield.DropDown:SetValue( tostring(var) or "Select" )
                     Panel.Configfield.DropDown:SetFont("ScoreboardDefault");
-                    for k,v in pairs(extra) do 
+                    for k,v in pairs(extra) do
                         Panel.Configfield.DropDown:AddChoice(v.value, v.data, v.select, v.icon);
                     end;
                     function Panel.Configfield.DropDown:OnSelect( index, text, data )
@@ -164,12 +164,12 @@ function OAWC.UI:OpenConfig()
                     end;
                 elseif element == "Binder" then
                     Panel.Configfield.Binder = vgui.Create("DBinder", Panel.Configfield);
-                    Panel.Configfield.Binder:DockMargin(0,0,0,0);   
+                    Panel.Configfield.Binder:DockMargin(0,0,0,0);
                     Panel.Configfield.Binder:SetWide(ScrW()*0.15);
                     Panel.Configfield.Binder:Dock(LEFT);
                     if var == nil or var == KEY_NONE then
                         Panel.Configfield.Binder:SetValue(KEY_NONE);
-                    else 
+                    else
                         Panel.Configfield.Binder:SetValue(var);
                     end;
                     function Panel.Configfield.Binder:OnChange( bVal )
@@ -194,51 +194,51 @@ function OAWC.UI:OpenConfig()
                     Panel.Save:SetTextColor(Color(0,0,0));
                     Panel.Save:SetFont("DermaLarge");
                     function Panel.Save:DoClick()
-                        if element == "Text" then 
+                        if element == "Text" then
                             savefunc(Panel.Configfield.TextEntry:GetValue());
-                        elseif element == "NumberText" then 
+                        elseif element == "NumberText" then
                             savefunc(tonumber(Panel.Configfield.TextEntry:GetValue()));
-                        end;          
+                        end;
                     end;
 
-                if extra == "OnEnter" and element == "Text" or element == "NumberText" then 
+                if extra == "OnEnter" and element == "Text" or element == "NumberText" then
                     Panel.Configfield:SetWide(ScrW()*0.16);
                     Panel.Configfield.TextEntry.OnEnter = function()
                         savefunc(Panel.Configfield.TextEntry:GetValue());
                     end;
                 end;
-                if extra == "OnChange" and element == "Text" or element == "NumberText" then 
+                if extra == "OnChange" and element == "Text" or element == "NumberText" then
                     Panel.Configfield:SetWide(ScrW()*0.16);
                     Panel.Configfield.TextEntry.OnChange = function()
                         savefunc(Panel.Configfield.TextEntry:GetValue());
                     end;
                 end;
-                if extra == "OnChange" and element == "Binder" then 
+                if extra == "OnChange" and element == "Binder" then
                     Panel.Configfield:SetWide(ScrW()*0.16);
                 end;
-                if element == "ODropDown" then 
+                if element == "ODropDown" then
                     Panel.Configfield:SetWide(ScrW()*0.16);
                 end;
 
-        end;    
+        end;
 
         local items = {};
 
-        local AddConfig = function(data) 
+        local AddConfig = function(data)
             data.name = data.name or "N/A";
             data.description = data.description or "N/A";
             data.VGUI = data.VGUI or nil;
-        
+
             items[data.name] = data;
             items[data.name].name = nil;
         end;
-        
+
             AddConfig({
                 name = "Main",
                 description = "Main Config",
                 VGUI = function(parent)
                     l.AddInformations(parent, "Main", "LOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLALOREM IMPSUM ALLA");
-                  --  l.SimpleEditField(parent, "Peter1", "...", OAWC.CoreConfig.Peter2, function(data) 
+                  --  l.SimpleEditField(parent, "Peter1", "...", OAWC.CoreConfig.Peter2, function(data)
                 --        OAWC.CoreConfig.Peter2 = data
                 --        OAWC.SetConfig();
                 --    end, "Checkbox" );
@@ -259,14 +259,14 @@ function OAWC.UI:OpenConfig()
 
                     local function tk()
                         itemss = {}
-                        if OAWC.CoreConfig.Binds == nil or table.IsEmpty(OAWC.CoreConfig.Binds) then 
+                        if OAWC.CoreConfig.Binds == nil or table.IsEmpty(OAWC.CoreConfig.Binds) then
                             c.noB = vgui.Create("DButton", c.Scroll);
                             c.noB:Dock(TOP);
                             c.noB:DockMargin(5,5,5,5);
                             c.noB:SetTall(ScrH()*0.05);
                             c.noB:SetText("No Data found!");
                             c.noB:SetTextColor(Color(0,0,0));
-                            c.noB:SetFont("DermaLarge");                                      
+                            c.noB:SetFont("DermaLarge");
                         else
                                 for k,v in pairs(OAWC.CoreConfig.Binds) do
                                 c.noB = vgui.Create("DPanel", c.Scroll);
@@ -299,7 +299,7 @@ function OAWC.UI:OpenConfig()
                                     OAWC.SetConfig();
                                     c.Scroll:Clear();
                                     tk()
-                                end; 
+                                end;
 
                                 c.noB.Edit = vgui.Create("DButton", c.noB);
                                 c.noB.Edit:Dock(RIGHT);
@@ -338,7 +338,7 @@ function OAWC.UI:OpenConfig()
                         c.bottom.savee:SetToolTip("Create a new Serverbind");
                         c.bottom.savee:SetFont("DermaDefault");
                         c.bottom.savee.DoClick = function()
-                            if namee == "" then return end 
+                            if namee == "" then return end
                             if bind == KEY_NONE then return end
                             if kind == "" then return end
                             if execute == "" then return end
@@ -425,12 +425,12 @@ function OAWC.UI:OpenConfig()
                         c.bottom.savee:SetToolTip("Create a new Serverbind");
                         c.bottom.savee:SetFont("DermaDefault");
                         c.bottom.savee.DoClick = function()
-                            if namee == "" then return end 
+                            if namee == "" then return end
                             if bind == KEY_NONE then return end
                             if kind == "" then return end
                             if execute == "" then return end
 
-                            va.Name = namee; 
+                            va.Name = namee;
                             va.Key = bind;
                             va.Executekind = kind;
                             va.Execute = execute;
@@ -527,7 +527,7 @@ function OAWC.UI:OpenConfig()
                 end;
             });
 
-            for k,v in pairs(items) do 
+            for k,v in pairs(items) do
                 v.pnl = vgui.Create("DPanel", l.general.tab);
                 v.pnl:Dock( FILL );
                 l.general.tab:AddSheet( k, v.pnl, nil );
@@ -543,7 +543,7 @@ function OAWC.UI:OpenConfig()
                 local ce = {};
 
                 l.AddInformations(l.character,"Character Manager","");
-                
+
                 l.c.Mp = vgui.Create("DPanel", l.character);
                 l.c.Mp:Dock(FILL);
 
@@ -558,8 +558,8 @@ function OAWC.UI:OpenConfig()
 
                 local function ccp()
                     net.Start("OAWC.CharSys.RequestCompressedData")
-                    net.SendToServer() 
-                            
+                    net.SendToServer()
+
                     timer.Simple(0.1, function()
 
                         if table.IsEmpty(OAWC.Charactersystem.Source.Characters) or OAWC.Charactersystem.Source.Characters == nil then
@@ -571,10 +571,10 @@ function OAWC.UI:OpenConfig()
                         else
                             for k, v in pairs(OAWC.Charactersystem.Source.Characters) do
                                 l.c.Category = vgui.Create( "DCollapsibleCategory", l.c.scroll )
-                                l.c.Category:SetLabel( k )					
+                                l.c.Category:SetLabel( k )
                                 l.c.Category:Dock( TOP )
                                 l.c.Category:SetExpanded( false )
-                                
+
                                 for kk,vv in pairs(OAWC.Charactersystem.Source.Characters[k]) do
                                     l.c.Button = vgui.Create("DButton", l.c.Category);
                                     l.c.Button:Dock(TOP);
@@ -612,7 +612,7 @@ function OAWC.UI:OpenConfig()
                                                 t = false,
                                             },
                                         };
-                                        
+
                                         for _k,_v in SortedPairsByMemberValue(d, "o", false ) do
                                             local pnl = vgui.Create("DPanel", l.c.Right);
                                             pnl:Dock(TOP);
@@ -626,13 +626,13 @@ function OAWC.UI:OpenConfig()
                                             lbl:SetText(_v.p);
                                             lbl:SetTextColor(Color(0,0,0,255));
 
-                                            if _v.t == true then  
+                                            if _v.t == true then
                                                 local s = vgui.Create("DButton", pnl);
                                                 s:Dock(RIGHT);
                                                 s:DockMargin(5,0,0,0);
                                                 s:SetWide(ScrW()*0.05);
                                                 s:SetText("S A V E");
-                                                
+
                                                 local lbt = vgui.Create("DTextEntry", pnl);
                                                 lbt:Dock(RIGHT);
                                                 lbt:SetWide(ScrW()*0.1);
@@ -665,7 +665,7 @@ function OAWC.UI:OpenConfig()
                         function l.c.search:OnChange()
                             local search_text = self:GetText():lower();
                             if (#search_text == 0) then
-                                for _,v in pairs(ce) do                 
+                                for _,v in pairs(ce) do
                                     v:SetTall(ScrH()*0.02);
                                 end;
                             else

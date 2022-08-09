@@ -1,10 +1,10 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
@@ -13,7 +13,7 @@
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 --[[ NETMESSAGES ]]
 
@@ -39,9 +39,9 @@ local function CreateCharacter(len,ply)
     }
 
     local lastjob = "null"
-    if read.kind == "FDP" then 
+    if read.kind == "FDP" then
         lastjob = OAWC.Config.StarterJobs.FDP
-    elseif read.kind == "DCP" then 
+    elseif read.kind == "DCP" then
         lastjob = OAWC.Config.StarterJobs.DCP
     end
 
@@ -54,12 +54,12 @@ local function SelectCharacter(len,ply)
     local str = net.ReadString()
     local sid = net.ReadString()
 
-    if ply:SteamID() == sid then 
+    if ply:SteamID() == sid then
         if ply.CharacterID == read then return end;
         if not isnumber(read) then return end;
         if not isstring(str) then return end;
         if not str == "FDP" and not str == "DCP" then return end;
-        
+
         ply.CharacterID = read;
         ply.CharacterKind = str;
 
@@ -89,7 +89,7 @@ end net.Receive("OAWC.CharSys.SelectCharacter", SelectCharacter)
 local function DarkRPValueChanged(ply, varname, oldValue, newValue)
     if ply.Characters == nil or table.IsEmpty(ply.Characters) then return end
     if ply.CharacterID == 0 or ply.CharacterKind == nil then return end
-    if varname == "money" then 
+    if varname == "money" then
         OAWC.SQL:Query("UPDATE `OAWC_Character` SET `wallet` = " .. newValue .. " WHERE `ID` = " .. SQLStr(ply.Characters[ply.CharacterKind].id) .. "", nil, OAWC.SQL.Error)
         print(ply.Characters[ply.CharacterKind].wallet)
     end;
@@ -100,7 +100,7 @@ concommand.Add("AD" , function(ply, cmd, args)
     ply:addMoney(tonumber(args[1]))
 end)
 
-local function SelectSCP(len,ply)    
+local function SelectSCP(len,ply)
     ply.CharacterID = -1
     ply.CharacterKind = "SCP"
 
@@ -127,7 +127,7 @@ local function RequestPlayerCharacter(len,ply)
             net.Start("OAWC.CharSys.RequestPlayerCharacter");
             net.WriteCompressedTable(r);
             net.Broadcast();
-            return; 
+            return;
         end;
 
             for k,v in pairs(data) do
@@ -140,7 +140,7 @@ local function RequestPlayerCharacter(len,ply)
                     weight = v.weight,
                     wallet = v.wallet,
                     lastjob = RPExtraTeams[tonumber(v.lastjob)].command,
-                    lastjobinnum = tonumber(v.lastjob), 
+                    lastjobinnum = tonumber(v.lastjob),
                     jobkind = v.jobkind,
                     inventory = util.JSONToTable(v.inventory),
                     playerdetails = util.JSONToTable(v.playerdetails)
@@ -161,7 +161,7 @@ end; net.Receive("OAWC.CharSys.RequestPlayerCharacter", RequestPlayerCharacter);
 
 local function DeleteCharacter(len,ply)
     local int = net.ReadInt(32)
-    if not ply.Characters["DCP"] or not ply.Characters["FDP"] and ply.CharacterID == -1 then 
+    if not ply.Characters["DCP"] or not ply.Characters["FDP"] and ply.CharacterID == -1 then
         ply:SetSpectatorMode(true)
         ply:setDarkRPVar("rpname",  "Spectator")
         ply.CharacterID = 0
@@ -169,7 +169,7 @@ local function DeleteCharacter(len,ply)
         net.Start("OAWC.CharSys.UpdateNumberInformation")
         net.WriteInt(0, 32)
         net.Send(ply)
-    end 
+    end
     if ply.CharacterID == int then
         ply:SetSpectatorMode(true)
         ply:setDarkRPVar("rpname",  "Spectator")

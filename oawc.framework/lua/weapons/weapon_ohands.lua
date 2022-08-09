@@ -61,7 +61,7 @@ SWEP.Primary.ClipSize       = -1
 SWEP.Primary.DefaultClip    = -1
 SWEP.Primary.Automatic      = true
 SWEP.Primary.Ammo           = "None"
-  
+
 SWEP.Secondary.ClipSize     = -1
 SWEP.Secondary.DefaultClip  = -1
 SWEP.Secondary.Automatic    = true
@@ -82,7 +82,7 @@ function SWEP:Initialize()
 
 	self.DRGTime = 0
 	self.DRGRange = 150
-end  
+end
 
 function SWEP:SetupDataTables()
 	self:NetworkVar( "Float", 0, "NextMeleeAttack" )
@@ -100,8 +100,8 @@ function SWEP:Think()
 		self:SetHoldType( "normal" )
 		if self.Drag and (not self.Owner:KeyDown(IN_ATTACK) or not IsValid(self.Drag.Entity)) then
 			self.Drag = nil
-		end	
-	elseif self.SwepMode == "Fist" then 
+		end
+	elseif self.SwepMode == "Fist" then
 		self:SetHoldType("fist")
 		local vm = self.Owner:GetViewModel()
 		local curtime = CurTime()
@@ -135,21 +135,21 @@ function SWEP:PrimaryAttack()
 
 		local Pos = self.Owner:GetShootPos()
 		local Aim = self.Owner:GetAimVector()
-	
+
 		local Tr = util.TraceLine{
 			start = Pos,
 			endpos = Pos +Aim *self.DRGRange,
 			filter = player.GetAll(),
 		}
-	
+
 		local HitEnt = Tr.Entity
-		if self.Drag then 
+		if self.Drag then
 			HitEnt = self.Drag.Entity
 		else
 			if not IsValid( HitEnt ) or HitEnt:GetMoveType() ~= MOVETYPE_VPHYSICS or HitEnt:IsVehicle() or HitEnt:GetNWBool( "NoDrag", false ) or OAWC.Config.DragBlackList[HitEnt:GetClass()] or IsValid( HitEnt:GetParent() ) then
 				return
 			end
-	
+
 			if not self.Drag then
 				self.Drag = {
 					OffPos = HitEnt:WorldToLocal(Tr.HitPos),
@@ -158,17 +158,17 @@ function SWEP:PrimaryAttack()
 				}
 			end
 		end
-	
+
 		if CLIENT or not IsValid( HitEnt ) then return end
-	
+
 		local Phys = HitEnt:GetPhysicsObject()
-	
+
 		if IsValid( Phys ) then
 			local Pos2 = Pos +Aim *self.DRGRange *self.Drag.Fraction
 			local OffPos = HitEnt:LocalToWorld( self.Drag.OffPos )
 			local Dif = Pos2 -OffPos
 			local Nom = (Dif:GetNormal() *math.min(1, Dif:Length() /100) *500 -Phys:GetVelocity()) *Phys:GetMass()
-	
+
 			Phys:ApplyForceOffset( Nom, OffPos )
 			Phys:AddAngleVelocity( -Phys:GetAngleVelocity() /4 )
 		end
@@ -182,15 +182,15 @@ function SWEP:PrimaryAttack()
 		if ( self:GetCombo() >= 2 ) then
 			anim = "fists_uppercut"
 		end
-	
+
 		local vm = self.Owner:GetViewModel()
 		vm:SendViewModelMatchingSequence( vm:LookupSequence( anim ) )
-	
+
 		self:EmitSound( SwingSound )
-	
+
 		self:UpdateNextIdle()
 		self:SetNextMeleeAttack( CurTime() + 0.2 )
-	
+
 		self:SetNextPrimaryFire( CurTime() + 0.9 )
 		self:SetNextSecondaryFire( CurTime() + 0.9 )
 		self.Reloadtimer = CurTime() + 1
@@ -199,7 +199,7 @@ function SWEP:PrimaryAttack()
 end
 
 if CLIENT then
-	if SWEP.SwepMode == "Hands" then 
+	if SWEP.SwepMode == "Hands" then
 		local x, y = ScrW() /2, ScrH() /2
 		local MainCol = Color( 255, 255, 255, 255 )
 		local Col = Color( 255, 255, 255, 255 )
@@ -251,14 +251,14 @@ if CLIENT then
 end
 
 function SWEP:SecondaryAttack()
-	if self.SwepMode == "Fist" then 
+	if self.SwepMode == "Fist" then
 		self:PrimaryAttack( true )
 	end
 end
 
 local delay = 0
 function SWEP:Reload()
-	if delay < CurTime() then 
+	if delay < CurTime() then
 		if self.SwepMode == "Hands" then
 			self.SwepMode = "Fist"
 			local vm = self.Owner:GetViewModel()
@@ -352,7 +352,7 @@ end
 
 
 function SWEP:Deploy()
-	if self.SwepMode == "Fist" then 
+	if self.SwepMode == "Fist" then
 		local speed = GetConVarNumber( "sv_defaultdeployspeed" )
 
 		local vm = self.Owner:GetViewModel()

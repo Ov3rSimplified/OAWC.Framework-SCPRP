@@ -1,10 +1,10 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
@@ -13,7 +13,7 @@
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 util.AddNetworkString("OAWC.SetDoNothing")
 
@@ -33,7 +33,7 @@ function PLAYER:SetSpectatorMode(bool)
       self:SetMoveType(MOVETYPE_NOCLIP)
       self:SetCollisionGroup(COLLISION_GROUP_WORLD)
       self:SetNoTarget(true)
-      self:SetNotSolid(true) 
+      self:SetNotSolid(true)
       self:SetNoDraw(true)
       self:SetNoCollideWithTeammates(true)
       self:SetCustomCollisionCheck(true)
@@ -51,10 +51,10 @@ function PLAYER:SetSpectatorMode(bool)
 end
 
 
- 
+
 
 hook.Add("PlayerSpawn", "CheckInitplayer", function(ply)
-  if ply.CharacterID == nil or ply.CharacterID == 0 then 
+  if ply.CharacterID == nil or ply.CharacterID == 0 then
       ply.CharacterID = 0
       timer.Simple(0.1, function()
         ply:SetSpectatorMode(true)
@@ -63,5 +63,5 @@ hook.Add("PlayerSpawn", "CheckInitplayer", function(ply)
         net.Send(ply)
       end)
   end;
-end) 
+end)
 

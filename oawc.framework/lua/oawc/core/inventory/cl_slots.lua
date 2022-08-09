@@ -1,19 +1,19 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
- 
+
 // Informations!
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 hook.Add("HUDShouldDraw", "OAWC.Scroll.Disable", function(name)
@@ -26,8 +26,8 @@ hook.Add("HUDShouldDraw", "OAWC.Scroll.Disable", function(name)
     end
 end);
 
-OAWC:RegisterFont("OAWC.WPS.FontBig", { 
-	font = "Bauhaus Md BT", 
+OAWC:RegisterFont("OAWC.WPS.FontBig", {
+	font = "Bauhaus Md BT",
 	size = ScrH() * 0.03,
 	extended = false,
 	weight = 1000,
@@ -43,8 +43,8 @@ OAWC:RegisterFont("OAWC.WPS.FontBig", {
 	additive = false,
 	outline = false,
 });
-OAWC:RegisterFont("OAWC.WPS.FontGrand", { 
-	font = "Bauhaus Md BT", 
+OAWC:RegisterFont("OAWC.WPS.FontGrand", {
+	font = "Bauhaus Md BT",
 	size = ScrH() * 0.035,
 	extended = false,
 	weight = 1000,
@@ -60,8 +60,8 @@ OAWC:RegisterFont("OAWC.WPS.FontGrand", {
 	additive = false,
 	outline = false,
 });
-OAWC:RegisterFont("OAWC.WPS.FontSmall", { 
-	font = "Bauhaus Md BT", 
+OAWC:RegisterFont("OAWC.WPS.FontSmall", {
+	font = "Bauhaus Md BT",
 	size = ScrH() * 0.01,
 	extended = false,
 	weight = 1000,
@@ -77,8 +77,8 @@ OAWC:RegisterFont("OAWC.WPS.FontSmall", {
 	additive = false,
 	outline = false,
 });
-OAWC:RegisterFont("OAWC.WPS.weapon", { 
-	font = "Bauhaus Md BT", 
+OAWC:RegisterFont("OAWC.WPS.weapon", {
+	font = "Bauhaus Md BT",
 	size = ScrH() * 0.038,
 	extended = false,
 	weight = 1000,
@@ -98,7 +98,7 @@ OAWC:RegisterFont("OAWC.WPS.weapon", {
 
 local current = 1
 local SlotE = {}
-if LocalPlayer().CharacterKind == "DRP" or LocalPlayer().CharacterKind == "FDP" then  
+if LocalPlayer().CharacterKind == "DRP" or LocalPlayer().CharacterKind == "FDP" then
   SlotE = {
     [-1] = tostring(OAWC.CoreConfig.HandSwep),
     [1] =  LocalPlayer().Characters[LocalPlayer().CharacterKind].inventory.Slot[1] or "NULL",
@@ -112,10 +112,10 @@ hook.Add("PlayerBindPress", "StarWarsHUD.WeaponSelector", function(ply, bind, pr
   ply = LocalPlayer();
   local wp = ply:GetWeapons();
   if not LocalPlayer().CharacterKind == "DRP" and LocalPlayer().CharacterKind == "FDP" then return end;
-  
+
   if table.IsEmpty(SlotE) then return end
   if bind == "invnext" and not ply:KeyDown(IN_ATTACK) and pressed then
-      if current == -1 then 
+      if current == -1 then
           current = 1;
           if ply:HasWeapon(SlotE[current]) then
               if ply:GetActiveWeapon():GetClass() == SlotE[current] then
@@ -178,7 +178,7 @@ hook.Add("PlayerBindPress", "StarWarsHUD.WeaponSelector", function(ply, bind, pr
               end;
           end;
       end;
-  end;  
+  end;
 
   if bind == "+attack" and not ply:KeyDown(IN_ATTACK) and pressed then
     if not LocalPlayer().CharacterKind == "DRP" and LocalPlayer().CharacterKind == "FDP" then return end;
@@ -201,7 +201,7 @@ concommand.Add("switch_", function(ply,cmd,args,argstr)
   ply = LocalPlayer();
   local wp = ply:GetWeapons();
 
-  if tonumber(args[1]) == nil then 
+  if tonumber(args[1]) == nil then
       return;
   else
       current = tonumber(args[1]);
@@ -221,7 +221,7 @@ local delay = 0
 hook.Add( "PlayerButtonDown", "OAWC.WPS", function( ply, button )
   if not LocalPlayer().CharacterKind == "DRP" and LocalPlayer().CharacterKind == "FDP" then return end;
     ply = LocalPlayer();
-    if delay < CurTime() then 
+    if delay < CurTime() then
         if button == KEY_G then
             current = -1;
             if ply:HasWeapon(SlotE[current]) then
@@ -287,7 +287,7 @@ hook.Add("HUDPaint", "OAWC.HUDPaint.Scroll", function()
           prim = "LEER";
         end;
       end;
-    end; 
+    end;
     if SlotE[2] == "NULL" then
       sec = "LEER";
     else
@@ -308,13 +308,13 @@ hook.Add("HUDPaint", "OAWC.HUDPaint.Scroll", function()
         else
           side = "LEER";
         end;
-      end; 
+      end;
     end;
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.737, ScrW() * 0.115, ScrH() * 0.05, 2, 6);
     draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.737, ScrW() * 0.115, ScrH() * 0.05, current == -1 and prettywhite or blackalpha ); // 0
-    draw.SimpleText(hand, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);     
-    draw.SimpleText("[G]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);     
+    draw.SimpleText(hand, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
+    draw.SimpleText("[G]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.737 + ScrH() * 0.05 / 2, current == -1 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
 
     OAWC.L:DrawBlurRect(ScrW() * 0.88, ScrH() * 0.792, ScrW() * 0.115, ScrH() * 0.05, 2, 6);
     draw.RoundedBox(0, ScrW() * 0.88, ScrH() * 0.792, ScrW() * 0.115, ScrH() * 0.05, current == 1 and prettywhite or blackalpha); // 1
@@ -331,8 +331,8 @@ hook.Add("HUDPaint", "OAWC.HUDPaint.Scroll", function()
     draw.SimpleText(side, "OAWC.WPS.FontBig", ScrW() * 0.88 + ScrW() * 0.115 / 2, ScrH() * 0.9 + ScrH() * 0.05 / 2, current == 3 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
     draw.SimpleText("[3]", "OAWC.WPS.FontBig", ScrW() * 0.92 + ScrW() * 0.115 / 2, ScrH() * 0.9 + ScrH() * 0.05 / 2, current == 3 and black or white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);
 
- 
- 
+
+
   if (LocalPlayer():GetActiveWeapon():IsValid()) then
         if (LocalPlayer():GetActiveWeapon():Clip1() != -1) then
           draw.SimpleText(LocalPlayer():GetActiveWeapon():Clip1() .. "/" .. LocalPlayer():GetAmmoCount(LocalPlayer():GetActiveWeapon():GetPrimaryAmmoType()), "OAWC.WPS.FontGrand", ScrW() * 0.91, ScrH() * 0.87 + ScrH() * 0.20 / 2, Color(255,255,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER);

@@ -1,10 +1,10 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
@@ -13,7 +13,7 @@
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 
@@ -50,9 +50,9 @@ local SpawnI
 
 hook.Remove("HUDPaint", "HealthAndArmorPaint")
 hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
-    
 
-    
+
+
     local scrW, scrH = ScrW(), ScrH()
     local boxW = scrW * 0.12
     local boxH = scrH * 0.007
@@ -193,12 +193,12 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
 
 
             local dir = EyeAngles().y
-    
+
             for i = 0, 360 / 15 - 1 do
                 local ang = i * 15
                 local dif = math.AngleDifference(ang, dir)
                 local offang = (18 * 10) / 2.8
-    
+
                 if math.abs(dif) < offang then
                     local dif2 = ScrW() * 0.014
                     local pos = dif / 15 * dif2
@@ -206,7 +206,7 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
                     local font = "OAWC.HUD.Compass.SmallNumbers"
                     local clr = Color(61,61,61)
                     local white = Color(255,255,255)
-    
+
                     if ang == 0 then
                         text = "N"
                         font = "OAWC.HUD.Compass.BigLetters"
@@ -240,13 +240,13 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
                         font = "OAWC.HUD.Compass.SmallLetters"
                         clr = white
                     end
-    
+
                     draw.DrawText("╿\n" .. text, font, scrW / 2 - pos - scrW * 0.415, scrH * 0.96, clr, TEXT_ALIGN_CENTER)
                 end
-    
+
                 local text = "0"
                 dir = math.Round(dir, 0)
-    
+
                 if (dir >= 0) then
                     local cust = dir - 180
                     cust = 360 - dir
@@ -256,7 +256,7 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
                     cust = dir * -1
                     text = tostring(cust) + 1
                 end
-    
+
                 draw.SimpleText(text, "OAWC.HUD.Compass.SmallLetters", scrW / 2, scrH * 0.05, Color(250,255,255), TEXT_ALIGN_CENTER)
                 draw.DrawText("▼", "OAWC.HUD.Compass.Tri", scrW * 0.086, scrH * 0.96, Color(255, 255, 255, 255), TEXT_ALIGN_CENTER)
             end
@@ -265,10 +265,10 @@ hook.Add("HUDPaint", "OAWC.HUDPaintMAIN", function()
         local health = LocalPlayer():Health()
         if health < 0 then health = 0 elseif health > 100 then health = 100 end
             health = health / 5
-        
+
         local HealthW = 53
         for k=0, health do
-            if k < health then 
+            if k < health then
                 surface.SetDrawColor(255,255,255,255)
                 surface.SetMaterial(Material("oawc/hud/bulletbar.jpg"))
                 surface.DrawTexturedRect( HealthW, ScrH()- 52, 11, boxH )

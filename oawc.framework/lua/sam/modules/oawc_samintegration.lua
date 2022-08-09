@@ -4,8 +4,8 @@ local sam, command = sam, sam.command
 
 sam.command.set_category("OAWC")
 
-sam.permissions.add("OAWC_Test", "OAWC", "admin") 
-sam.permissions.add("OAWC_Config", "OAWC", "admin") 
+sam.permissions.add("OAWC_Test", "OAWC", "admin")
+sam.permissions.add("OAWC_Config", "OAWC", "admin")
 
 
 

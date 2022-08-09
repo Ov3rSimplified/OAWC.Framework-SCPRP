@@ -8,7 +8,7 @@ TEAM_SPECTATOR = DarkRP.createJob("Spectator", {
     salary = 0,
     admin = 0,
     vote = false,
-    hasLicense = false, 
+    hasLicense = false,
     candemote = false,
   })
 TEAM_SCPSELECT = DarkRP.createJob("SCP Selection", {

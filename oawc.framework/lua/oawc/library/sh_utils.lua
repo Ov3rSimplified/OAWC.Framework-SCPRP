@@ -1,10 +1,10 @@
 --[[
- _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _       
+ _______  _______           _______      _______  _______  _______  _______  _______           _______  _______  _
 (  ___  )(  ___  )|\     /|(  ____ \    (  ____ \(  ____ )(  ___  )(       )(  ____ \|\     /|(  ___  )(  ____ )| \    /\
 | (   ) || (   ) || )   ( || (    \/    | (    \/| (    )|| (   ) || () () || (    \/| )   ( || (   ) || (    )||  \  / /
-| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ / 
-| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (  
-| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \ 
+| |   | || (___) || | _ | || |          | (__    | (____)|| (___) || || || || (__    | | _ | || |   | || (____)||  (_/ /
+| |   | ||  ___  || |( )| || |          |  __)   |     __)|  ___  || |(_)| ||  __)   | |( )| || |   | ||     __)|   _ (
+| |   | || (   ) || || || || |          | (      | (\ (   | (   ) || |   | || (      | || || || |   | || (\ (   |  ( \ \
 | (___) || )   ( || () () || (____/\    | )      | ) \ \__| )   ( || )   ( || (____/\| () () || (___) || ) \ \__|  /  \ \
 (_______)|/     \|(_______)(_______/    |/       |/   \__/|/     \||/     \|(_______/(_______)(_______)|/   \__/|_/    \/
 
@@ -13,7 +13,7 @@
 // Author: TwinKlee
 // Startday: 27.06.2022 / 14:23
 // FRAMEWORK FOR THE OAWC SCPRP !!
-// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !! 
+// YOUR NOT ALLOWED TO EDIT OR LEAK OR REUPLOAD THIS WITHOUT MY RELEASE !!
 ]]
 
 local blur = Material("pp/blurscreen")
@@ -62,8 +62,8 @@ end
 
 function OAWC:RegisterFont(name,tbl)
 	surface.CreateFont( name, tbl)
-end  
-                    
+end
+
 function net.WriteCompressedTable(tbl)
 	local data = util.TableToJSON(tbl)
 	data = util.Compress(data)
@@ -80,7 +80,7 @@ end
 OAWC.L.scrollingtext_store = {}
 OAWC.L.particles_store = {}
 function OAWC.L:SimpleScrollingText(scrollid, text, font, x, y, color, ax, ay)
-    ax = ax or 0 
+    ax = ax or 0
     ay = ay or 0
     if (!scrollid) then
         scrollid = table.insert(OAWC.L.scrollingtext_store, {
@@ -92,7 +92,7 @@ function OAWC.L:SimpleScrollingText(scrollid, text, font, x, y, color, ax, ay)
     end
     if (!OAWC.L.scrollingtext_store[scrollid]) then return end
     local nowText = OAWC.L.scrollingtext_store[scrollid]["text"]
- 
+
     surface.SetFont(font)
     local width, height = surface.GetTextSize(nowText)
     draw.SimpleText(nowText, font, x, y, color, ax, ay)
@@ -131,7 +131,7 @@ function OAWC.L:CreateTextField(parent)
 
 		draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(0, 0, 0, 150))
 		draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 255, 255, 35*self.alpha))
-        if self.SetColor == nil then 
+        if self.SetColor == nil then
 		    draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(255, 209, 55, 75*self.alpha2))
         else
             draw.RoundedBox(self.Rounded, 0, 0, w, h, Color(self.SetColor.r, self.SetColor.g, self.SetColor.b, 75*self.alpha2))
@@ -159,8 +159,8 @@ end
 
 
 if CLIENT then
-    OAWC:RegisterFont("OAWC.Notifyer.Top", { 
-        font = "Bauhaus Md BT", 
+    OAWC:RegisterFont("OAWC.Notifyer.Top", {
+        font = "Bauhaus Md BT",
         size = ScrH() * 0.04,
         extended = true,
         weight = 1000,
@@ -176,8 +176,8 @@ if CLIENT then
         additive = false,
         outline = false,
     })
-    OAWC:RegisterFont("OAWC.Notifyer.Content", { 
-        font = "Montserrat", 
+    OAWC:RegisterFont("OAWC.Notifyer.Content", {
+        font = "Montserrat",
         size = ScrH() * 0.025,
         extended = true,
         weight = 1000,
@@ -205,7 +205,7 @@ if CLIENT then
         if IsValid(self.Current) then
             self.Current:Remove()
         end
-                
+
         self.Current = vgui.Create("DPanel")
         self.Current:SetPos(ScrW() * 0.74, ScrH() * 0.1)
         self.Current:SetSize(ScrW() * 0.25, ScrH() * 0.14)
@@ -285,13 +285,13 @@ if CLIENT then
         OAWC:Notify(mode, title, body, duration)
     end)
 
-end 
-    
-if SERVER then 
+end
+
+if SERVER then
     util.AddNetworkString("OAWC.Notifyer")
 
     function OAWC:Notify(mode, ply, title, body, duration)
-    
+
         net.Start("OAWC.Notifyer")
             net.WriteString(mode)
             net.WriteString(title)
@@ -305,7 +305,7 @@ end
 
 
 function OAWC.ConfigTableAvailable()
-    if table.IsEmpty(OAWC.CoreConfig) then 
+    if table.IsEmpty(OAWC.CoreConfig) then
         return false
     else
         return true
